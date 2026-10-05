@@ -354,7 +354,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
   <div class="sec-hdr fi"><div class="sec-ey"><span class="sec-num">01 /</span> About</div><h2 class="sec-title">Who I <em>Am</em></h2></div>
   <div class="about-text fi">
     <p>Hi, I'm <strong>Shreya</strong> — a data scientist, ML engineer, and management consultant currently pursuing my <strong>M.S. in Data Science at Columbia University</strong>. I bring a rare blend of hands-on business impact and deep technical capability.</p>
-    <p>At <strong>GEP Worldwide</strong>, I led 70+ strategic sourcing projects with $159M spend across 18 U.S. states for Fortune 300 clients, managing 20+ stakeholders and delivering $9.2M in savings through <strong>data-driven spend analysis, and supplier negotiations</strong>. Now at Columbia, I build cutting-edge AI systems — from agentic RAG pipelines to multi-agent investment platforms.</p>
+    <p>At <strong>GEP Worldwide</strong>, I led 70+ strategic sourcing projects with $159M spend across 18 U.S. states for Fortune 300 clients, managing 20+ stakeholders and delivering $9.2M in savings through <strong>data-driven spend analysis, and supplier negotiations</strong>. Now at Columbia, I build cutting-edge AI systems — from agentic RAG pipelines to multi-agent investment platforms. This summer, as a Predictive Analytics Data Science Intern at <strong>ACS</strong>, I built and validated explainable ML pipelines for child-risk prediction.</p>
     <p>I'm equally comfortable <span class="acc">presenting insights to C-suite stakeholders</span> as I am fine-tuning a transformer model. My edge is translating complex ML outputs into strategic decisions that move organizations forward.</p>
     <p>Beyond building models, I'm passionate about <span class="acc">mentorship, education, and community</span> — from tutoring Columbia athletes to mentoring first-generation students in Mumbai.</p>
   </div>
@@ -370,6 +370,21 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
 <section id="experience" class="full-pad alt-bg">
   <div class="sec-hdr fi"><div class="sec-ey"><span class="sec-num">02 /</span> Work</div><h2 class="sec-title">Professional <em>Experience</em></h2></div>
   <div class="exp-list">
+    <div class="exp-card fi">
+      <div class="exp-top"><div class="exp-role">Predictive Analytics Data Science Intern</div><span class="exp-badge intern">Internship</span></div>
+      <div class="exp-company">ACS · New York, NY</div>
+      <div class="exp-meta">Jun 2026 – Aug 2026 · 3 mos</div>
+      <ul class="exp-bullets">
+        <li>Designed and implemented a full explainable AI pipeline for a Random Forest child-maltreatment risk model (500 trees, class-balanced, 190+ engineered features) trained on 178K+ cases, integrating seven interpretability methods (TreeSHAP, LIME, DALEX, EBM, ALE, permutation importance, Gini) and achieving ROC-AUC of 0.804 and PR-AUC/prevalence of 9.63, exceeding the official production benchmark.</li>
+        <li>Built a statistical comparison layer for XAI method agreement — Spearman/Kendall rank correlations, decile lift, confidence calibration, TP/FP/FN/TN error analysis, and LIME–SHAP top-feature concordance — with per-case local explanations for every row and automated executive dashboards per dataset run.</li>
+        <li>Conducted a fairness audit across 5 sensitive demographic attributes, quantifying predicted-positive-rate, TPR, and FPR gaps and flagging disparities requiring further review.</li>
+        <li>Built two cross-validation frameworks testing explanation consistency across 5 independent test datasets and 3 analysts' independently run pipelines, distinguishing robust findings from sampling noise and surfacing operational, fairness, and methodology-sensitivity issues invisible in any single run.</li>
+        <li>Ran a hyperparameter stability study (checkpointed, resumable tuning pipeline; 120+ configs on 170K rows) comparing Gini importance against path-dependent and interventional SHAP to explain why explanations diverged across team notebooks, delivering a configuration recommendation adopted by the team's primary model.</li>
+        <li>Diagnosed and resolved production pipeline issues, including a 600-fold SHAP slowdown from unconstrained tree depth and a stale-cache bug silently producing incorrect explanations.</li>
+        <li>Led an independent analysis of training-exposure bias on a ~1M-row dataset (see ASAP Recirculation project) and presented findings to directors and technical leads.</li>
+      </ul>
+      <div class="exp-tags"><span class="exp-tag">Python</span><span class="exp-tag">scikit-learn</span><span class="exp-tag">SHAP</span><span class="exp-tag">LIME</span><span class="exp-tag">DALEX</span><span class="exp-tag">EBM</span><span class="exp-tag">Random Forest</span><span class="exp-tag">Explainable AI</span><span class="exp-tag">Model Fairness</span><span class="exp-tag">Statistical Validation</span></div>
+    </div>
     <div class="exp-card fi">
       <div class="exp-top"><div class="exp-role">Senior Analyst — Consulting</div><span class="exp-badge full">Full-Time</span></div>
       <div class="exp-company">GEP Worldwide · Navi Mumbai, IN</div>
@@ -403,8 +418,22 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
   <div class="sec-hdr fi"><div class="sec-ey"><span class="sec-num">03 /</span> Work</div><h2 class="sec-title">Technical <em>Projects</em></h2></div>
   <div class="proj-grid">
 
-    <div class="proj-card fi">
+    <div class="proj-card fi" style="grid-column:1/-1;">
       <div class="proj-num">PROJECT — 001</div>
+      <div class="proj-title">Does Prior Training Exposure Bias Risk Predictions? (ASAP Recirculation Analysis)</div>
+      <div class="proj-org">ACS · Independent Internship Project · Jun – Aug 2026</div>
+      <ul class="proj-bullets">
+        <li>Designed and executed a multi-experiment analysis on a ~1M-row child welfare dataset to test whether a Random Forest risk model scores previously-trained cases differently, using case-grouped (GroupKFold) cross-validation and replicated designs (18 model trainings across 3 seeds and 3 training configurations).</li>
+        <li>Identified a 15-point AUC inflation (0.902 in-sample vs. 0.755 holdout) and validated cross-validation (0.759–0.766) as the trustworthy benchmark, informing how model performance should be reported.</li>
+        <li>Quantified a moderate training-exposure effect (~2–4 AUC points) concentrated among true-positive cases, using paired t-tests, Wilcoxon signed-rank tests, and logistic interaction regression across 17,494 matched cases.</li>
+        <li>Stress-tested the finding by excluding the top 1% most-recurring cases (43 of 4,389); the effect changed by 10% or less, ruling out outlier-driven results.</li>
+        <li>Caught that an initial single-split result gave a misleading "no effect" conclusion — replication across seeds and designs reversed it.</li>
+      </ul>
+      <div class="proj-tech"><span>Python</span><span>scikit-learn</span><span>statsmodels</span><span>SciPy</span><span>GroupKFold CV</span><span>Hypothesis Testing</span><span>Experiment Design</span></div>
+    </div>
+
+    <div class="proj-card fi">
+      <div class="proj-num">PROJECT — 002</div>
       <div class="proj-title">Agentic RAG for Clinical Trial Discovery Chatbot</div>
       <div class="proj-org">Columbia University · Sep – Dec 2025</div>
       <ul class="proj-bullets">
@@ -420,7 +449,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 002</div>
+      <div class="proj-num">PROJECT — 003</div>
       <div class="proj-title">Lumiq: Multi-Agent AI Investment Analysis Platform</div>
       <div class="proj-org">Columbia University · Sep – Dec 2025</div>
       <ul class="proj-bullets">
@@ -437,7 +466,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 003</div>
+      <div class="proj-num">PROJECT — 004</div>
       <div class="proj-title">Neural Network Based Osteoporosis Prediction</div>
       <div class="proj-org">Sardar Patel Institute of Technology · Mar – Jul 2023</div>
       <ul class="proj-bullets">
@@ -453,7 +482,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 004</div>
+      <div class="proj-num">PROJECT — 005</div>
       <div class="proj-title">SafeRoute: Crime Zone Analysis Using ML</div>
       <div class="proj-org">Sardar Patel Institute of Technology · Aug – Dec 2022</div>
       <ul class="proj-bullets">
@@ -469,7 +498,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 005</div>
+      <div class="proj-num">PROJECT — 006</div>
       <div class="proj-title">Impact of AI Adoption Announcements on Insurance Stock Valuations</div>
       <div class="proj-org">Columbia University · Sep – Dec 2025</div>
       <ul class="proj-bullets">
@@ -485,7 +514,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 006</div>
+      <div class="proj-num">PROJECT — 007</div>
       <div class="proj-title">NYC Housing Violations & 311 Complaints Analysis</div>
       <div class="proj-org">Columbia University · Sep – Dec 2025</div>
       <ul class="proj-bullets">
@@ -514,7 +543,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
       <div class="proj-grid" style="margin-top:3px;">
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 007</div>
+      <div class="proj-num">PROJECT — 008</div>
       <div class="proj-title">EventAffair — Event Management App</div>
       <div class="proj-org">Sardar Patel Institute of Technology · Aug – Dec 2022</div>
       <ul class="proj-bullets">
@@ -529,7 +558,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi">
-      <div class="proj-num">PROJECT — 008</div>
+      <div class="proj-num">PROJECT — 009</div>
       <div class="proj-title">KYC Verification With Live Video</div>
       <div class="proj-org">Sardar Patel Institute of Technology · Mar – May 2021</div>
       <ul class="proj-bullets">
@@ -544,7 +573,7 @@ footer{padding:16px 80px;border-top:1px solid var(--border-p);display:flex;justi
     </div>
 
     <div class="proj-card fi" style="grid-column:1/-1;">
-      <div class="proj-num">PROJECT — 009</div>
+      <div class="proj-num">PROJECT — 010</div>
       <div class="proj-title">Laser Gesture Recognition</div>
       <div class="proj-org">Sardar Patel Institute of Technology · Mar – May 2022</div>
       <ul class="proj-bullets">
