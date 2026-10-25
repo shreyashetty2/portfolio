@@ -50,7 +50,7 @@
 /* ---------- base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 118px; }
-@media (min-width: 1280px) { html { scroll-padding-top: 84px; } }
+@media (min-width: 1024px) { html { scroll-padding-top: 84px; } }
 body {
   background: var(--bg);
   color: var(--text);
@@ -256,6 +256,56 @@ html.bfly-cursor-on input, html.bfly-cursor-on textarea { cursor: text !importan
   padding: .4rem .8rem; border-radius: 999px; display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap;
 }
 @media (max-width: 639px) { .status-pill { display: none; } }
+
+/* ---------- side panel nav (desktop) ---------- */
+.side-nav {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 60;
+  display: none; flex-direction: column; align-items: center; gap: 5px;
+  padding: 12px 8px; border-radius: 40px;
+  background: rgba(13,9,25,.84); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-p);
+  box-shadow: 0 0 40px rgba(255,45,155,.16), inset 0 0 22px rgba(157,78,221,.1);
+}
+@media (min-width: 1024px) {
+  .side-nav { display: flex; }
+  .top-nav { display: none; }
+  main, footer { padding-right: 64px; }
+}
+.side-rail { position: absolute; left: 50%; top: 22px; bottom: 22px; width: 2px; margin-left: -1px; border-radius: 2px; background: rgba(157,78,221,.25); overflow: hidden; z-index: 0; }
+.side-rail-fill { position: absolute; left: 0; top: 0; width: 100%; height: 0; background: linear-gradient(var(--pink), var(--purple), var(--gold)); box-shadow: 0 0 10px var(--pink); }
+.side-link {
+  position: relative; z-index: 1; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%;
+  color: #a993bd; background: var(--surface); border: 1px solid rgba(157,78,221,.25);
+  transition: color .25s, background .25s, border-color .25s, box-shadow .25s, transform .25s;
+}
+.side-link svg { width: 16px; height: 16px; stroke-width: 1.8; }
+.side-link:hover, .side-link:focus-visible { color: var(--pink); border-color: var(--pink); box-shadow: var(--glow-p); transform: scale(1.08); }
+.side-link.active { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--pink), var(--purple)); box-shadow: var(--glow-p); }
+.side-link.active::after {
+  content: ''; position: absolute; inset: -5px; border-radius: 50%;
+  border: 1px dashed rgba(255,224,102,.75); animation: orbit 7s linear infinite;
+}
+@keyframes orbit { to { transform: rotate(360deg); } }
+.side-link.home { color: var(--pink-soft); }
+.side-link.home svg { width: 20px; height: 20px; filter: drop-shadow(0 0 6px rgba(255,45,155,.8)); }
+.side-tip {
+  position: absolute; right: calc(100% + 14px); top: 50%; transform: translate(6px, -50%);
+  font-family: 'Space Mono', monospace; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  color: var(--text); background: var(--surface2); border: 1px solid var(--border-p); border-radius: 6px; padding: 6px 10px;
+  box-shadow: 0 0 18px rgba(255,45,155,.25); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.side-tip .n { color: var(--pink); margin-right: 6px; }
+.side-tip::after { content: ''; position: absolute; right: -5px; top: 50%; width: 8px; height: 8px; margin-top: -4px; background: var(--surface2); border-top: 1px solid var(--border-p); border-right: 1px solid var(--border-p); transform: rotate(45deg); }
+.side-link:hover .side-tip, .side-link:focus-visible .side-tip { opacity: 1; transform: translate(0, -50%); }
+.side-div { width: 16px; height: 1px; margin: 3px 0; background: linear-gradient(90deg, transparent, var(--pink), transparent); position: relative; z-index: 1; }
+
+/* ---------- glittering cyber-pixie trail ---------- */
+.pixie-dot, .pixie-bfly { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 9998; will-change: transform, opacity, filter; }
+.pixie-dot { border-radius: 50%; }
+.pixie-dot.gold { background: radial-gradient(circle, #fffbe0 0%, var(--gold) 55%, rgba(255,224,102,0) 100%); box-shadow: 0 0 8px rgba(255,224,102,.95), 0 0 16px rgba(255,224,102,.5); }
+.pixie-dot.cyan { background: radial-gradient(circle, #e6fffb 0%, var(--cyan) 55%, rgba(0,240,212,0) 100%); box-shadow: 0 0 8px rgba(0,240,212,.95), 0 0 16px rgba(0,240,212,.45); }
+.pixie-bfly { color: var(--pink); }
+.pixie-bfly svg { display: block; width: 100%; height: 100%; animation: flap .14s ease-in-out infinite alternate; }
 .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: pulse 1.8s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.75); } }
 
@@ -294,8 +344,9 @@ html.bfly-cursor-on input, html.bfly-cursor-on textarea { cursor: text !importan
 .term-line { font-family: 'Space Mono', monospace; font-size: .78rem; color: var(--muted); }
 .caret { display: inline-block; width: .55em; height: 1.05em; background: var(--pink); vertical-align: -.15em; margin-left: 2px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
-.lorenz-card { aspect-ratio: 1 / 1; border-radius: 22px; }
-.lorenz-card canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.wing-card { aspect-ratio: 1 / 1; border-radius: 22px; touch-action: none; }
+.wing-card canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hud .chaos { color: var(--pink); text-shadow: 0 0 10px rgba(255,45,155,.8); }
 .hud { position: absolute; z-index: 5; font-family: 'Space Mono', monospace; font-size: .62rem; letter-spacing: .08em; color: #b9a3cc; pointer-events: none; }
 .hud b { color: var(--cyan); font-weight: 400; }
 .hud .g { color: var(--gold); }
@@ -653,8 +704,8 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       <svg class="logo-bfly" width="22" height="22" aria-hidden="true"><use href="#bfly"/></svg>
       <span>SHREYA<span class="glow-pink">.</span>DEV</span>
     </a>
-    <nav class="nav-scroll order-3 w-full xl:order-none xl:w-auto xl:flex-1 overflow-x-auto" aria-label="Sections">
-      <ul class="flex items-center gap-1 xl:justify-center">
+    <nav class="top-nav nav-scroll order-3 w-full overflow-x-auto" aria-label="Sections">
+      <ul class="flex items-center gap-1">
         <li><a class="nav-link" href="#about" data-sec="about"><span class="num">01</span><span class="scr">About</span></a></li>
         <li><a class="nav-link" href="#experience" data-sec="experience"><span class="num">02</span><span class="scr">Experience</span></a></li>
         <li><a class="nav-link" href="#projects" data-sec="projects"><span class="num">03</span><span class="scr">Projects</span></a></li>
@@ -665,9 +716,26 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         <li><a class="nav-link" href="#community" data-sec="recognition" data-filter="community"><span class="num">08</span><span class="scr">Community</span></a></li>
       </ul>
     </nav>
-    <div class="ml-auto xl:ml-0 status-pill"><span class="pulse-dot"></span>Open to Opportunities</div>
+    <div class="ml-auto status-pill"><span class="pulse-dot"></span>Open to Opportunities</div>
   </div>
 </header>
+
+<!-- SIDE PANEL NAV -->
+<nav class="side-nav" aria-label="Section navigation">
+  <div class="side-rail" aria-hidden="true"><div class="side-rail-fill" id="sideRailFill"></div></div>
+  <a href="#hero" class="side-link home" data-sec="hero"><span class="side-tip"><span class="n">00</span><span class="scr">Home</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#bfly"/></svg><span class="sr-only">Home</span></a>
+  <div class="side-div" aria-hidden="true"></div>
+  <a href="#about" class="side-link" data-sec="about"><span class="side-tip"><span class="n">01</span><span class="scr">About</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="sr-only">About</span></a>
+  <a href="#experience" class="side-link" data-sec="experience"><span class="side-tip"><span class="n">02</span><span class="scr">Experience</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg><span class="sr-only">Experience</span></a>
+  <a href="#projects" class="side-link" data-sec="projects"><span class="side-tip"><span class="n">03</span><span class="scr">Projects</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="sr-only">Projects</span></a>
+  <a href="#skills" class="side-link" data-sec="skills"><span class="side-tip"><span class="n">04</span><span class="scr">Skills</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span class="sr-only">Skills</span></a>
+  <a href="#education" class="side-link" data-sec="academic" data-node="msds"><span class="side-tip"><span class="n">05</span><span class="scr">Education</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span class="sr-only">Education</span></a>
+  <a href="#awards" class="side-link" data-sec="recognition" data-filter="award"><span class="side-tip"><span class="n">06</span><span class="scr">Awards</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg><span class="sr-only">Awards</span></a>
+  <a href="#assistantship" class="side-link" data-sec="academic" data-node="ta2"><span class="side-tip"><span class="n">07</span><span class="scr">Assistantship</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="sr-only">Assistantship</span></a>
+  <a href="#community" class="side-link" data-sec="recognition" data-filter="community"><span class="side-tip"><span class="n">08</span><span class="scr">Community</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span class="sr-only">Community</span></a>
+  <div class="side-div" aria-hidden="true"></div>
+  <a href="#contact" class="side-link" data-sec="contact"><span class="side-tip"><span class="n">09</span><span class="scr">Contact</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span class="sr-only">Contact</span></a>
+</nav>
 
 <main>
 
@@ -689,7 +757,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       <p class="hero-bio mt-6">
         Bridging <span class="glow-pink">data science</span>, <span class="glow-cyan">business strategy</span>, and machine learning — from leading <span class="gold font-bold">$159M</span> strategic sourcing projects at <strong>GEP</strong> to building explainable ML for child-risk prediction at <strong>ACS</strong> and agentic AI for marketing decisions in research with <strong>TD Bank</strong>. I build intelligent pipelines that turn complex data into real decisions.
       </p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 gap-2.5 mt-7 max-w-xl">
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2.5 mt-7 max-w-xl">
         <div class="kpi"><div class="v" data-count="159" data-prefix="$" data-suffix="M">$159M</div><div class="l">Sourcing spend led</div></div>
         <div class="kpi"><div class="v" data-count="9.2" data-prefix="$" data-suffix="M" data-dec="1">$9.2M</div><div class="l">Savings delivered</div></div>
         <div class="kpi"><div class="v" data-count="70" data-suffix="+">70+</div><div class="l">Projects led</div></div>
@@ -709,15 +777,15 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     </div>
 
     <div class="reveal" style="transition-delay:.15s">
-      <div class="lorenz-card tcard holo corners relative w-full max-w-[560px] mx-auto" id="lorenzCard">
+      <div class="wing-card tcard holo corners relative w-full max-w-[560px] mx-auto" id="wingCard">
         <div class="crosshair"></div>
-        <canvas id="lorenz" aria-label="Animated Lorenz attractor — the butterfly of chaos theory" role="img"></canvas>
-        <div class="hud top-4 left-5"><b>lorenz.attractor</b>(σ=10, ρ=28, β=8/3)</div>
-        <div class="hud top-4 right-5 text-right">θ <span id="hudTheta">0.00</span> rad</div>
-        <div class="hud bottom-4 left-5">Δx₀ → <span class="g">chaos</span></div>
-        <div class="hud bottom-4 right-5 text-right"><span class="g">●</span> trace · <b>n</b>=<span id="hudN">0</span></div>
+        <canvas id="wingCanvas" aria-label="Data Metamorphosis Wing Canvas — a particle network shaped like butterfly wings that scatters near the cursor and reassembles" role="img"></canvas>
+        <div class="hud top-4 left-5"><b>data.metamorphosis</b>(wings)</div>
+        <div class="hud top-4 right-5 text-right">nodes <span class="g" id="hudNodes">0</span></div>
+        <div class="hud bottom-4 left-5">state → <span class="g" id="hudState">ASSEMBLING</span></div>
+        <div class="hud bottom-4 right-5 text-right">entropy <b id="hudEntropy">1.00</b></div>
       </div>
-      <p class="text-center mono text-[.62rem] tracking-[.14em] uppercase text-muted mt-3">hover to steer the butterfly effect</p>
+      <p class="text-center mono text-[.62rem] tracking-[.14em] uppercase text-muted mt-3">touch the wings for chaos · move away for a decision</p>
     </div>
   </div>
 </section>
@@ -1026,11 +1094,11 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     <div class="matrix reveal" id="matrix">
       <div class="mcell" data-glow="pink">
         <div class="flex items-center gap-3 mb-4"><div class="mic"><i class="fa-solid fa-code"></i></div><div><div class="midx">[cat_01]</div><div class="mtitle">Programming &amp; Frameworks</div></div></div>
-        <div class="chip-row"><span class="sk">Python</span><span class="sk">R</span><span class="sk">C</span><span class="sk">Java</span><span class="sk">SQL</span><span class="sk">CSS</span><span class="sk">JavaScript</span><span class="sk">MATLAB</span><span class="sk">Flask</span><span class="sk">Django</span><span class="sk">Keras</span><span class="sk">TensorFlow</span><span class="sk">REST API</span><span class="sk">React.js</span></div>
+        <div class="chip-row"><span class="sk">Python</span><span class="sk">R</span><span class="sk">C</span><span class="sk">Java</span><span class="sk">SQL</span><span class="sk">CSS</span><span class="sk">JavaScript</span><span class="sk">MATLAB</span><span class="sk">Flask</span><span class="sk">FastAPI</span><span class="sk">Django</span><span class="sk">Keras</span><span class="sk">TensorFlow</span><span class="sk">REST API</span><span class="sk">React.js</span></div>
       </div>
       <div class="mcell" data-glow="cyan">
         <div class="flex items-center gap-3 mb-4"><div class="mic"><i class="fa-solid fa-brain"></i></div><div><div class="midx">[cat_02]</div><div class="mtitle">Data Science &amp; Analytics</div></div></div>
-        <div class="chip-row"><span class="sk">Machine Learning</span><span class="sk">NLP</span><span class="sk">PyTorch</span><span class="sk">RAG</span><span class="sk">AI</span><span class="sk">Prompt Engineering</span><span class="sk">Pandas</span><span class="sk">NumPy</span><span class="sk">Tableau</span><span class="sk">Power BI</span><span class="sk">MS Excel</span><span class="sk">VBA Macros</span><span class="sk">MySQL</span><span class="sk">Hadoop</span><span class="sk">Apache Hive</span></div>
+        <div class="chip-row"><span class="sk">Machine Learning</span><span class="sk">NLP</span><span class="sk">PyTorch</span><span class="sk">RAG</span><span class="sk">AI</span><span class="sk">Prompt Engineering</span><span class="sk">LLM Agents</span><span class="sk">Gemini API</span><span class="sk">LiteLLM</span><span class="sk">Pandas</span><span class="sk">NumPy</span><span class="sk">Tableau</span><span class="sk">Power BI</span><span class="sk">MS Excel</span><span class="sk">VBA Macros</span><span class="sk">MySQL</span><span class="sk">Hadoop</span><span class="sk">Apache Hive</span></div>
       </div>
       <div class="mcell" data-glow="pink">
         <div class="flex items-center gap-3 mb-4"><div class="mic"><i class="fa-solid fa-magnifying-glass-chart"></i></div><div><div class="midx">[cat_03]</div><div class="mtitle">Explainable &amp; Responsible ML</div></div></div>
@@ -1042,7 +1110,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       </div>
       <div class="mcell" data-glow="pink">
         <div class="flex items-center gap-3 mb-4"><div class="mic"><i class="fa-solid fa-toolbox"></i></div><div><div class="midx">[cat_05]</div><div class="mtitle">Tools &amp; Platforms</div></div></div>
-        <div class="chip-row"><span class="sk">Git / GitHub</span><span class="sk">Selenium</span><span class="sk">Postman</span><span class="sk">Jira</span><span class="sk">MS PowerPoint</span><span class="sk">Power Query</span><span class="sk">Streamlit</span><span class="sk">Gradio</span></div>
+        <div class="chip-row"><span class="sk">Git / GitHub</span><span class="sk">Selenium</span><span class="sk">Postman</span><span class="sk">Jira</span><span class="sk">MS PowerPoint</span><span class="sk">Power Query</span><span class="sk">Streamlit</span><span class="sk">Gradio</span><span class="sk">pytest</span><span class="sk">GitHub Actions</span><span class="sk">Google Cloud Run</span><span class="sk">Vertex AI</span></div>
       </div>
       <div class="mcell" data-glow="cyan">
         <div class="flex items-center gap-3 mb-4"><div class="mic"><i class="fa-solid fa-pen-nib"></i></div><div><div class="midx">[cat_06]</div><div class="mtitle">Design &amp; Prototyping</div></div></div>
@@ -1153,13 +1221,20 @@ details.log[open] .log-list { animation: logIn .4s ease; }
      1. BUTTERFLY CURSOR TRAIL
      ========================================================= */
   class ButterflyTrail {
-    constructor({ life = 600, minDist = 14, minGap = 22, max = 60 } = {}) {
+    constructor({ life = 600, minDist = 14, minGap = 22, max = 60, pixieLife = 1500, pixieGap = 16, pixieMax = 200 } = {}) {
       this.life = life;
       this.minDist = minDist;
       this.minGap = minGap;
       this.max = max;
       this.live = 0;
       this.last = { x: -999, y: -999, t: 0 };
+      // glittering cyber-pixie stream
+      this.pixieLife = pixieLife;
+      this.pixieGap = pixieGap;
+      this.pixieMax = pixieMax;
+      this.pixies = 0;
+      this.lastPixie = 0;
+      this.prev = null;
       this.onMove = this.onMove.bind(this);
       window.addEventListener('pointermove', this.onMove, { passive: true });
     }
@@ -1167,6 +1242,17 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     onMove(e) {
       if (e.pointerType && e.pointerType !== 'mouse') return;
       const now = performance.now();
+
+      // pixie stream: dense, long-lived stardust behind the pointer
+      const vx = this.prev ? e.clientX - this.prev.x : 0;
+      const vy = this.prev ? e.clientY - this.prev.y : 0;
+      this.prev = { x: e.clientX, y: e.clientY };
+      if (now - this.lastPixie >= this.pixieGap && Math.hypot(vx, vy) > 1.5) {
+        this.lastPixie = now;
+        this.spawnPixies(e.clientX, e.clientY, vx, vy);
+      }
+
+      // signature fluttering butterflies
       const dist = Math.hypot(e.clientX - this.last.x, e.clientY - this.last.y);
       if (dist < this.minDist || now - this.last.t < this.minGap || this.live >= this.max) return;
       this.last = { x: e.clientX, y: e.clientY, t: now };
@@ -1199,6 +1285,94 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       const cleanup = () => { el.remove(); this.live--; };
       anim.onfinish = cleanup;
       anim.oncancel = cleanup;
+    }
+
+    spawnPixies(x, y, vx, vy) {
+      const sparks = 2 + (Math.random() < 0.5 ? 1 : 0);
+      for (let i = 0; i < sparks; i++) {
+        this.spawnSpark(x + (Math.random() - 0.5) * 10, y + (Math.random() - 0.5) * 10, vx, vy, Math.random() < 0.55 ? 'gold' : 'cyan');
+      }
+      if (Math.random() < 0.4) this.spawnPixieButterfly(x, y, vx, vy);
+    }
+
+    // stardust physics: small initial kick, horizontal drift, downward gravity,
+    // shrinking to 0 while fading and blurring into the grid
+    fallFrames({ drift, kick, gravity, rot0 = 0, rot1 = 0, blurMax, glow = '' }) {
+      const frames = [];
+      const steps = 10;
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const x = drift * t;
+        const y = kick * t + gravity * t * t;
+        const scale = Math.pow(1 - t, 0.85);
+        const opacity = 1 - Math.pow(t, 1.7);
+        const blur = blurMax * t * t;
+        frames.push({
+          offset: t,
+          transform: `translate(calc(-50% + ${x.toFixed(1)}px), calc(-50% + ${y.toFixed(1)}px)) rotate(${(rot0 + (rot1 - rot0) * t).toFixed(1)}deg) scale(${scale.toFixed(3)})`,
+          opacity: opacity.toFixed(3),
+          filter: `${glow} blur(${blur.toFixed(2)}px)`.trim()
+        });
+      }
+      return frames;
+    }
+
+    launch(el, frames, life) {
+      document.body.appendChild(el);
+      this.pixies++;
+      const anim = el.animate(frames, { duration: life, easing: 'linear', fill: 'forwards' });
+      let done = false;
+      const cleanup = () => {
+        if (done) return;
+        done = true;
+        anim.cancel();
+        el.remove();
+        this.pixies--;
+      };
+      anim.onfinish = cleanup;
+      anim.oncancel = cleanup;
+      // safety net in case the animation never reports back (e.g. hidden tab)
+      setTimeout(cleanup, life + 400);
+    }
+
+    spawnSpark(x, y, vx, vy, tone) {
+      if (this.pixies >= this.pixieMax) return;
+      const el = document.createElement('span');
+      const size = 2.5 + Math.random() * 3.5;
+      el.className = `pixie-dot ${tone}`;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      const life = this.pixieLife;
+      this.launch(el, this.fallFrames({
+        drift: (Math.random() - 0.5) * 56 + vx * 0.35,
+        kick: -6 - Math.random() * 16 + vy * 0.2,
+        gravity: 70 + Math.random() * 70,
+        blurMax: 3.5
+      }), life);
+    }
+
+    spawnPixieButterfly(x, y, vx, vy) {
+      if (this.pixies >= this.pixieMax) return;
+      const el = document.createElement('div');
+      const size = 8 + Math.random() * 6;
+      el.className = 'pixie-bfly';
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.innerHTML = '<svg viewBox="0 0 24 24"><use href="#bfly"/></svg>';
+      const rot0 = Math.random() * 50 - 25;
+      this.launch(el, this.fallFrames({
+        drift: (Math.random() - 0.5) * 70 + vx * 0.3,
+        kick: -10 - Math.random() * 14,
+        gravity: 55 + Math.random() * 55,
+        rot0,
+        rot1: rot0 + (Math.random() * 120 - 60),
+        blurMax: 4,
+        glow: 'drop-shadow(0 0 5px rgba(255,45,155,.95))'
+      }), this.pixieLife);
     }
   }
 
@@ -1412,7 +1586,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       });
       el.replaceWith(frag);
     });
-    document.querySelectorAll('.nav-link').forEach((link) => {
+    document.querySelectorAll('.nav-link, .side-link').forEach((link) => {
       const target = link.querySelector('.scr');
       const fx = new TextScramble(target);
       link.addEventListener('mouseenter', () => fx.run());
@@ -1428,120 +1602,282 @@ details.log[open] .log-list { animation: logIn .4s ease; }
   /* =========================================================
      HERO — LORENZ ATTRACTOR (the butterfly of chaos)
      ========================================================= */
-  class LorenzAttractor {
+  class WingCanvas {
     constructor(canvas) {
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d');
       this.wrap = canvas.parentElement;
-      this.points = this.integrate(9000);
-      this.theta = 0.6;
-      this.head = 0;
-      this.steer = 0;
+      this.mouse = null;
+      this.t = 0;
+      this.frame = 0;
       this.visible = true;
       this.running = false;
-      this.hudTheta = document.getElementById('hudTheta');
-      this.hudN = document.getElementById('hudN');
-
+      this.placed = false;
+      this.hudState = document.getElementById('hudState');
+      this.hudEntropy = document.getElementById('hudEntropy');
+      this.hudNodes = document.getElementById('hudNodes');
+      this.palette = {
+        pink: [255, 45, 155], purple: [157, 78, 221], cyan: [0, 240, 212],
+        gold: [255, 224, 102], white: [255, 246, 194]
+      };
+      this.sprites = {};
+      Object.entries(this.palette).forEach(([k, c]) => { this.sprites[k] = WingCanvas.sprite(c); });
+      this.build();
       this.resize();
       new ResizeObserver(() => this.resize()).observe(this.wrap);
-      this.wrap.addEventListener('pointermove', (e) => {
-        const r = this.wrap.getBoundingClientRect();
-        this.steer = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      });
-      this.wrap.addEventListener('pointerleave', () => { this.steer = 0; });
+
+      const track = (e) => {
+        const r = this.canvas.getBoundingClientRect();
+        this.mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+      };
+      this.wrap.addEventListener('pointermove', track);
+      this.wrap.addEventListener('pointerdown', track);
+      this.wrap.addEventListener('pointerleave', () => { this.mouse = null; });
+      this.wrap.addEventListener('pointercancel', () => { this.mouse = null; });
+
       new IntersectionObserver(([entry]) => {
         this.visible = entry.isIntersecting;
         if (this.visible && !reduceMotion) this.loop();
       }).observe(this.wrap);
     }
 
-    integrate(n) {
-      const sigma = 10, rho = 28, beta = 8 / 3, dt = 0.005;
-      let x = 0.1, y = 0, z = 0;
-      const pts = [];
-      for (let i = 0; i < n + 300; i++) {
-        const dx = sigma * (y - x);
-        const dy = x * (rho - z) - y;
-        const dz = x * y - beta * z;
-        x += dx * dt; y += dy * dt; z += dz * dt;
-        if (i >= 300) pts.push([x, y, z]);
+    static sprite([r, g, b]) {
+      const c = document.createElement('canvas');
+      c.width = c.height = 32;
+      const x = c.getContext('2d');
+      const grd = x.createRadialGradient(16, 16, 0, 16, 16, 16);
+      grd.addColorStop(0, 'rgba(255,255,255,1)');
+      grd.addColorStop(0.18, `rgba(${r},${g},${b},1)`);
+      grd.addColorStop(0.45, `rgba(${r},${g},${b},.35)`);
+      grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      x.fillStyle = grd;
+      x.fillRect(0, 0, 32, 32);
+      return c;
+    }
+
+    static inPoly(x, y, poly) {
+      let inside = false;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const [xi, yi] = poly[i];
+        const [xj, yj] = poly[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
       }
-      return pts;
+      return inside;
+    }
+
+    // Build the wing lattice in normalized space (body at 0,0; x right, y down).
+    build() {
+      const upper = [[0.04, -0.06], [0.10, -0.40], [0.30, -0.62], [0.56, -0.70], [0.78, -0.60], [0.88, -0.40], [0.80, -0.18], [0.56, -0.05], [0.26, 0.01]];
+      const lower = [[0.04, 0.05], [0.28, 0.07], [0.52, 0.15], [0.67, 0.33], [0.64, 0.53], [0.50, 0.67], [0.31, 0.67], [0.15, 0.52], [0.06, 0.30]];
+      const d = 0.072;
+      const half = [];
+      const links = new Set();
+      const link = (a, b) => { if (a !== b) links.add(a < b ? `${a}-${b}` : `${b}-${a}`); };
+
+      // 1. outlines — sampled along each polygon edge, chained into glowing contours
+      const outlineSets = [];
+      [upper, lower].forEach((poly) => {
+        const ids = [];
+        for (let i = 0; i < poly.length; i++) {
+          const [x1, y1] = poly[i];
+          const [x2, y2] = poly[(i + 1) % poly.length];
+          const steps = Math.max(1, Math.round(Math.hypot(x2 - x1, y2 - y1) / 0.055));
+          for (let k = 0; k < steps; k++) {
+            const t = k / steps;
+            ids.push(half.length);
+            half.push({ x: x1 + (x2 - x1) * t, y: y1 + (y2 - y1) * t, edge: true });
+          }
+        }
+        outlineSets.push(ids);
+      });
+      // 2. lattice — triangular grid inside the wings, skipping points crowding the contour
+      const edgeCount = half.length;
+      for (let row = 0, y = -0.72; y <= 0.72; y += d * 0.866, row++) {
+        for (let x = 0.06 + (row % 2) * (d / 2); x <= 0.9; x += d) {
+          if (!WingCanvas.inPoly(x, y, upper) && !WingCanvas.inPoly(x, y, lower)) continue;
+          let crowded = false;
+          for (let i = 0; i < edgeCount; i++) {
+            if (Math.hypot(half[i].x - x, half[i].y - y) < d * 0.5) { crowded = true; break; }
+          }
+          if (!crowded) half.push({ x, y, edge: false });
+        }
+      }
+
+      // 3. mirror into left (pink/purple) + right (cyan/gold) wings, then add the body
+      const nodes = [];
+      const mk = (hx, hy, side, color, edge) => nodes.push({ hx, hy, side, color, edge, x: 0, y: 0, vx: 0, vy: 0, off: 0, tw: Math.random() * Math.PI * 2 });
+      const n = half.length;
+      half.forEach((p) => mk(-p.x, p.y, 'L', p.edge ? 'pink' : (Math.random() < 0.55 ? 'pink' : 'purple'), p.edge));
+      half.forEach((p) => mk(p.x, p.y, 'R', p.edge ? 'cyan' : (Math.random() < 0.6 ? 'cyan' : 'gold'), p.edge));
+      const bodyStart = nodes.length;
+      for (let y = -0.24; y <= 0.34; y += 0.058) mk(0, y, 'B', 'white', true);
+      const antennaL = [];
+      const antennaR = [];
+      for (let k = 1; k <= 5; k++) {
+        const t = k / 5;
+        const ax = 0.15 * t;
+        const ay = -0.24 - 0.3 * t + 0.08 * t * t;
+        antennaL.push(nodes.length); mk(-ax, ay, 'B', 'gold', true);
+        antennaR.push(nodes.length); mk(ax, ay, 'B', 'gold', true);
+      }
+
+      outlineSets.forEach((ids) => ids.forEach((id, i) => {
+        const nextId = ids[(i + 1) % ids.length];
+        link(id, nextId);
+        link(id + n, nextId + n);
+      }));
+      for (let i = bodyStart; i < bodyStart + 10 && i + 1 < nodes.length; i++) {
+        if (nodes[i + 1] && nodes[i + 1].hx === 0) link(i, i + 1);
+      }
+      [antennaL, antennaR].forEach((arr) => {
+        link(bodyStart, arr[0]);
+        for (let i = 0; i < arr.length - 1; i++) link(arr[i], arr[i + 1]);
+      });
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          if (a.side !== b.side && a.side !== 'B' && b.side !== 'B') continue;
+          if (Math.hypot(a.hx - b.hx, a.hy - b.hy) < d * 1.12) link(i, j);
+        }
+      }
+
+      this.nodes = nodes;
+      this.links = Array.from(links).map((key) => {
+        const [a, b] = key.split('-').map(Number);
+        const A = nodes[a];
+        const B = nodes[b];
+        const side = A.side === B.side ? A.side : 'B';
+        return { a, b, side, edge: A.edge && B.edge, rest: Math.hypot(A.hx - B.hx, A.hy - B.hy) };
+      });
+      if (this.hudNodes) this.hudNodes.textContent = String(nodes.length);
     }
 
     resize() {
       const r = this.wrap.getBoundingClientRect();
+      if (!r.width) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       this.w = r.width;
       this.h = r.height;
       this.canvas.width = Math.round(r.width * dpr);
       this.canvas.height = Math.round(r.height * dpr);
       this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      this.S = Math.min(this.w * 0.55, this.h * 0.64);
+      this.cx = this.w / 2;
+      this.cy = this.h * 0.53;
+      if (!this.placed) {
+        this.placed = true;
+        this.nodes.forEach((p) => {
+          if (reduceMotion) {
+            p.x = this.cx + p.hx * this.S;
+            p.y = this.cy + p.hy * this.S;
+          } else {
+            // start as raw chaos so the wings assemble on first view
+            p.x = Math.random() * this.w;
+            p.y = Math.random() * this.h;
+          }
+        });
+      }
       this.draw();
     }
 
-    project(p, cos, sin, scale) {
-      const X = p[0] * cos - p[1] * sin;
-      return [this.w / 2 + X * scale, this.h / 2 - (p[2] - 25) * scale * 0.92];
+    step() {
+      this.t += 1 / 60;
+      const S = this.S;
+      const flap = 0.93 + 0.07 * Math.cos(this.t * 1.8);
+      const R = S * 0.42;
+      const m = this.mouse;
+      let energy = 0;
+      for (const p of this.nodes) {
+        const tx = this.cx + p.hx * S * flap;
+        const ty = this.cy + p.hy * S + Math.sin(this.t * 1.3 + p.hx * 4) * 1.2;
+        // spring back toward the wing structure (the "decision")
+        let ax = (tx - p.x) * 0.02;
+        let ay = (ty - p.y) * 0.02;
+        // cursor proximity scatters nodes into pixie dust (the "chaos")
+        if (m) {
+          const dx = p.x - m.x;
+          const dy = p.y - m.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < R && dist > 0.01) {
+            const f = Math.pow(1 - dist / R, 2) * 2.8;
+            ax += (dx / dist) * f + (Math.random() - 0.5) * 0.7 * f;
+            ay += (dy / dist) * f + (Math.random() - 0.5) * 0.7 * f - 0.08 * f;
+          }
+        }
+        p.vx = (p.vx + ax) * 0.9;
+        p.vy = (p.vy + ay) * 0.9;
+        const sp = Math.hypot(p.vx, p.vy);
+        if (sp > 14) { p.vx *= 14 / sp; p.vy *= 14 / sp; }
+        p.x += p.vx;
+        p.y += p.vy;
+        p.off = Math.hypot(tx - p.x, ty - p.y);
+        energy += p.off;
+      }
+      this.entropy = Math.min(1, energy / (this.nodes.length * S * 0.12));
     }
 
     draw() {
       const g = this.ctx;
-      const n = this.points.length;
-      const cos = Math.cos(this.theta);
-      const sin = Math.sin(this.theta);
-      const scale = Math.min(this.w, this.h) / 62;
+      const S = this.S;
       g.clearRect(0, 0, this.w, this.h);
+      g.globalCompositeOperation = 'lighter';
 
-      const wings = [
-        { color: 'rgba(255,45,155,.62)', test: (x) => x > 3 },
-        { color: 'rgba(157,78,221,.62)', test: (x) => x >= -3 && x <= 3 },
-        { color: 'rgba(0,240,212,.55)', test: (x) => x < -3 }
-      ];
-      for (const wing of wings) {
-        g.fillStyle = wing.color;
-        for (let i = 0; i < n; i++) {
-          const p = this.points[i];
-          if (!wing.test(p[0])) continue;
-          const s = this.project(p, cos, sin, scale);
-          g.fillRect(s[0], s[1], 1.25, 1.25);
-        }
+      // vector connections, batched by wing + strain level
+      const strokes = {
+        L: ['rgba(255,45,155,.55)', 'rgba(255,45,155,.24)', 'rgba(255,45,155,.09)'],
+        R: ['rgba(0,240,212,.5)', 'rgba(0,240,212,.22)', 'rgba(0,240,212,.08)'],
+        B: ['rgba(255,224,102,.6)', 'rgba(255,224,102,.26)', 'rgba(255,224,102,.1)']
+      };
+      const paths = {};
+      for (const L of this.links) {
+        const A = this.nodes[L.a];
+        const B = this.nodes[L.b];
+        const len = Math.hypot(A.x - B.x, A.y - B.y);
+        const stretch = len / (L.rest * S + 0.001);
+        if (stretch > 2.6) continue;
+        const level = stretch < 1.35 ? (L.edge ? 0 : 1) : 2;
+        const key = L.side + level;
+        if (!paths[key]) paths[key] = new Path2D();
+        paths[key].moveTo(A.x, A.y);
+        paths[key].lineTo(B.x, B.y);
       }
+      g.lineWidth = 0.8;
+      Object.entries(paths).forEach(([key, path]) => {
+        g.strokeStyle = strokes[key[0]][Number(key[1])];
+        g.lineWidth = key[1] === '0' ? 1.1 : 0.7;
+        g.stroke(path);
+      });
 
-      const trail = 180;
-      for (let k = trail; k >= 0; k--) {
-        const idx = (this.head - k + n) % n;
-        const s = this.project(this.points[idx], cos, sin, scale);
-        const a = 1 - k / trail;
-        g.fillStyle = `rgba(255,224,102,${(a * 0.95).toFixed(3)})`;
-        const size = 1 + a * 2;
-        g.fillRect(s[0] - size / 2, s[1] - size / 2, size, size);
+      // glowing data nodes — displaced ones swell and twinkle like pixie dust
+      for (const p of this.nodes) {
+        const loose = Math.min(p.off / (S * 0.15), 1);
+        const size = (p.edge ? 7 : 5.5) + loose * 9;
+        g.globalAlpha = loose > 0.05 ? 0.55 + 0.45 * Math.sin(this.t * 9 + p.tw) : 0.9;
+        g.drawImage(this.sprites[p.color], p.x - size / 2, p.y - size / 2, size, size);
       }
-      const head = this.project(this.points[this.head], cos, sin, scale);
-      g.save();
-      g.shadowColor = 'rgba(255,224,102,.95)';
-      g.shadowBlur = 18;
-      g.fillStyle = '#fff6c2';
-      g.beginPath();
-      g.arc(head[0], head[1], 3.4, 0, Math.PI * 2);
-      g.fill();
-      g.restore();
+      g.globalAlpha = 1;
+      g.globalCompositeOperation = 'source-over';
 
-      if (this.hudTheta) this.hudTheta.textContent = (this.theta % (Math.PI * 2)).toFixed(2);
-      if (this.hudN) this.hudN.textContent = String(this.head).padStart(4, '0');
+      if (this.frame++ % 8 === 0 && this.hudState) {
+        const e = this.entropy ?? 1;
+        const chaos = e > 0.14;
+        this.hudState.textContent = this.mouse && chaos ? 'CHAOS' : chaos ? 'RE-ASSEMBLING' : 'DECISION';
+        this.hudState.className = chaos ? 'chaos' : 'g';
+        this.hudEntropy.textContent = e.toFixed(2);
+      }
     }
 
     loop() {
       if (this.running) return;
       this.running = true;
-      const step = () => {
+      const tick = () => {
         if (!this.visible) { this.running = false; return; }
-        this.theta += 0.0035 + this.steer * 0.012;
-        this.head = (this.head + 9) % this.points.length;
+        this.step();
         this.draw();
-        requestAnimationFrame(step);
+        requestAnimationFrame(tick);
       };
-      requestAnimationFrame(step);
+      requestAnimationFrame(tick);
     }
   }
 
@@ -1582,26 +1918,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
      ========================================================= */
   const PROJECTS = [
     {
-      id: '001', cat: 'ml', icon: 'fa-scale-unbalanced', wide: true,
-      title: 'Does Prior Training Exposure Bias Risk Predictions?', sub: 'ASAP Recirculation Analysis',
-      org: 'ACS · Independent internship project', date: 'Jun – Aug 2026',
-      metric: '15-pt', metricLbl: 'AUC inflation caught — 0.902 in-sample vs 0.755 holdout',
-      impact: [
-        'Set cross-validation (0.759–0.766) as the trustworthy benchmark, informing how model performance should be reported.',
-        'Found a moderate training-exposure effect (~2–4 AUC points) concentrated among true-positive cases — and showed it is not driven by outlier cases.',
-        'Caught that a single train/test split gave a misleading "no effect" conclusion; replication across seeds and designs reversed it.'
-      ],
-      tech: [
-        '~1M-row child welfare dataset · case-grouped GroupKFold cross-validation',
-        '18 model trainings across 3 seeds × 3 training configurations',
-        'Paired t-tests, Wilcoxon signed-rank & logistic interaction regression on 17,494 matched cases',
-        'Robustness: excluded top 1% most-recurring cases (43 of 4,389) → effect changed ≤ 10%'
-      ],
-      stack: ['Python', 'scikit-learn', 'statsmodels', 'SciPy', 'GroupKFold', 'Experiment Design'],
-      links: []
-    },
-    {
-      id: '002', cat: 'ai', icon: 'fa-stethoscope',
+      cat: 'ai', icon: 'fa-stethoscope', wide: true,
       title: 'Agentic RAG for Clinical Trial Discovery', org: 'Columbia University', date: 'Sep – Dec 2025',
       metric: '113K+', metricLbl: 'ClinicalTrials.gov records searchable in plain language',
       impact: [
@@ -1621,7 +1938,73 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ]
     },
     {
-      id: '003', cat: 'ai', icon: 'fa-chart-line',
+      cat: 'ai', icon: 'fa-gavel', wide: true,
+      title: 'Precedent & Practice — Human Rights Advocacy Tracker', sub: 'TrialWatch Fair Trial & AI Hackathon · Track 3: Advocacy & Impact',
+      org: 'Columbia Law School Human Rights Institute · team of 5', date: 'Oct 2026',
+      role: 'Co-developer: reform rule engine, Argument Bank, sourced UN letter workflow, outcome-update log',
+      metric: '2,381', metricLbl: 'page-cited legal arguments, 100% verified on the page they cite',
+      impact: [
+        "Turns TrialWatch's scattered PDF trial reports into an advocacy tool: for any new speech prosecution worldwide, it surfaces the closest past trials, good outcomes first.",
+        "Stress-tested Indonesia's 2024–25 speech-law reform: 5 of 13 past prosecutions would likely be barred today (3–9 across 10 legal interpretations).",
+        'Drafts UN Special Rapporteur submissions where every sentence is sourced, checked by code, and approved by a named reviewer before export to Word.',
+        'Responsible AI by design: no AI where rules suffice, at-risk people never sent to the AI, outcomes "followed" advocacy and are never claimed as "caused" by it.'
+      ],
+      tech: [
+        'Scraped 96 TrialWatch report listings + 226 news posts from cfj.org',
+        'Deterministic parsing (pdftotext + regex, no AI) of 2,075 PDF pages → 2,381 arguments, 63 trial grades, 154 UN HRC decisions',
+        'Argument Bank: explainable case matching, grouped under 5 legal tests (legality, vagueness, broadness, necessity, proportionality)',
+        'Rule engine with a 10-scenario sensitivity analysis for the reform stress test',
+        'Gemini letter drafter: code rejects uncited sentences and invented quotes; python-docx Word export',
+        '178 pytest tests in CI (GitHub Actions) · 47/47 outcomes hand-confirmed · deployed on Streamlit Community Cloud'
+      ],
+      stack: ['Python', 'pandas', 'Streamlit', 'Gemini API', 'python-docx', 'pytest', 'GitHub Actions'],
+      links: [
+        { t: 'Live App', u: 'https://fairtrial-ai-hackathongit-cyvqxeqekcqd4hjsqr7b5w.streamlit.app/', k: 'demo' },
+        { t: 'GitHub', u: 'https://github.com/valentinasilva8/fairtrial-ai-hackathon', k: 'gh' }
+      ]
+    },
+    {
+      cat: 'ml', icon: 'fa-scale-unbalanced', wide: true, private: true,
+      title: 'Does Prior Training Exposure Bias Risk Predictions?', sub: 'ASAP Recirculation Analysis',
+      org: 'ACS · Independent internship project', date: 'Jun – Aug 2026',
+      metric: '15-pt', metricLbl: 'AUC inflation caught — 0.902 in-sample vs 0.755 holdout',
+      impact: [
+        'Set cross-validation (0.759–0.766) as the trustworthy benchmark, informing how model performance should be reported.',
+        'Found a moderate training-exposure effect (~2–4 AUC points) concentrated among true-positive cases — and showed it is not driven by outlier cases.',
+        'Caught that a single train/test split gave a misleading "no effect" conclusion; replication across seeds and designs reversed it.'
+      ],
+      tech: [
+        '~1M-row child welfare dataset · case-grouped GroupKFold cross-validation',
+        '18 model trainings across 3 seeds × 3 training configurations',
+        'Paired t-tests, Wilcoxon signed-rank & logistic interaction regression on 17,494 matched cases',
+        'Robustness: excluded top 1% most-recurring cases (43 of 4,389) → effect changed ≤ 10%'
+      ],
+      stack: ['Python', 'scikit-learn', 'statsmodels', 'SciPy', 'GroupKFold', 'Experiment Design'],
+      links: []
+    },
+    {
+      cat: 'ai', icon: 'fa-shirt',
+      title: 'Layer Lab — AI Outfit-Planning Agent', org: 'Columbia University · IEOR 4570 · team of 3', date: 'Fall 2026',
+      role: 'Owned the closet/wardrobe domain, 3 original agent tools, and multi-person closet sharing',
+      metric: '3', metricLbl: 'original agent tools for proactive, data-driven reasoning',
+      impact: [
+        'Tells you what to wear from real hourly weather, time spent indoors vs. outdoors, and how warm or cold you personally run, using a thermal-comfort model (PMV/clo) instead of guesswork.',
+        "Lets two people share one closet: skin-touching garments stay separate, outerwear is shared, and outfits don't repeat across days.",
+        'Goes beyond Q&A: spots wardrobe gaps, plans laundry, and reports how the closet is actually used.'
+      ],
+      tech: [
+        'Tool-calling LLM agent on FastAPI + LiteLLM / Vertex AI (Gemini), deployed on Cloud Run',
+        'Designed suggest_wardrobe_gaps, plan_laundry and wardrobe_stats tools',
+        'Hygiene-aware item exclusion, quantity-aware laundry tracking, cross-day variety logic',
+        "Fixed a silent state-corruption bug that applied one person's cold-sensitivity profile to another; added a self-checking warning instead of a prompt-only patch",
+        '100+ offline pytest tests (zero network/LLM calls) + LLM eval harness for tool-selection accuracy',
+        'Vanilla JS "layers" panel: stacked multi-day, multi-person outfit views with live chat updates'
+      ],
+      stack: ['Python', 'FastAPI', 'LiteLLM', 'Vertex AI (Gemini)', 'Vanilla JS', 'Cloud Run', 'pytest'],
+      links: []
+    },
+    {
+      cat: 'ai', icon: 'fa-chart-line',
       title: 'Lumiq: Multi-Agent AI Investment Analysis', org: 'Columbia University', date: 'Sep – Dec 2025',
       metric: '128', metricLbl: 'curated financial documents grounding every call',
       impact: [
@@ -1641,7 +2024,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ]
     },
     {
-      id: '004', cat: 'ml', icon: 'fa-bone',
+      cat: 'ml', icon: 'fa-bone',
       title: 'Neural Network Osteoporosis Prediction', org: 'Sardar Patel Institute of Technology', date: 'Mar – Jul 2023',
       metric: '87.2%', metricLbl: 'accuracy · 0.86 AUC predicting osteoporosis risk',
       impact: [
@@ -1660,7 +2043,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ]
     },
     {
-      id: '005', cat: 'ml', icon: 'fa-route',
+      cat: 'ml', icon: 'fa-route',
       title: 'SafeRoute: Crime Zone Analysis Using ML', org: 'Sardar Patel Institute of Technology', date: 'Aug – Dec 2022',
       metric: '1,000+', metricLbl: 'user reviews analyzed to score zone-level safety',
       impact: [
@@ -1680,7 +2063,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ]
     },
     {
-      id: '006', cat: 'analytics', icon: 'fa-building-columns',
+      cat: 'analytics', icon: 'fa-building-columns',
       title: 'AI Adoption Announcements & Insurance Stock Valuations', org: 'Columbia University', date: 'Sep – Dec 2025',
       metric: '+3.22%', metricLbl: 'global abnormal return after AI adoption announcements',
       impact: [
@@ -1701,7 +2084,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ]
     },
     {
-      id: '007', cat: 'analytics', icon: 'fa-city',
+      cat: 'analytics', icon: 'fa-city',
       title: 'NYC Housing Violations & 311 Complaints', org: 'Columbia University', date: 'Sep – Dec 2025',
       metric: '2022–25', metricLbl: 'HPD violations × 311 complaints across Manhattan',
       impact: [
@@ -1717,7 +2100,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       links: [{ t: 'Live Site', u: 'https://shreyashetty2.github.io/edav_project/', k: 'demo' }]
     },
     {
-      id: '008', cat: 'build', icon: 'fa-calendar-days',
+      cat: 'build', icon: 'fa-calendar-days',
       title: 'EventAffair — Event Management App', org: 'Sardar Patel Institute of Technology', date: 'Aug – Dec 2022',
       metric: '1 app', metricLbl: 'for concerts, movies & corporate functions',
       impact: [
@@ -1733,7 +2116,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       links: [{ t: 'Report', u: 'https://drive.google.com/file/d/1CCs2q9wamMDpfFInqFdLOqpJ5qEnqt4Z/view', k: 'doc' }]
     },
     {
-      id: '009', cat: 'build', icon: 'fa-id-card',
+      cat: 'build', icon: 'fa-id-card',
       title: 'KYC Verification With Live Video', org: 'Sardar Patel Institute of Technology', date: 'Mar – May 2021',
       metric: '92%', metricLbl: "face-matching accuracy · 2nd prize, JIT Hack'21",
       impact: [
@@ -1749,7 +2132,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       links: [{ t: 'GitHub', u: 'https://github.com/shreyashetty2/kyc-verification', k: 'gh' }]
     },
     {
-      id: '010', cat: 'build', icon: 'fa-hand-pointer', wide: true,
+      cat: 'build', icon: 'fa-hand-pointer', wide: true,
       title: 'Laser Gesture Recognition', org: 'Sardar Patel Institute of Technology', date: 'Mar – May 2022',
       metric: '90%', metricLbl: 'gesture recognition accuracy',
       impact: [
@@ -1765,7 +2148,8 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     }
   ];
   const CAT_LABEL = { ai: 'AI & Agents', ml: 'ML & Statistics', analytics: 'Analytics', build: 'Build & Design' };
-  const INITIAL_VISIBLE = 7;
+  PROJECTS.forEach((p, i) => { p.id = String(i + 1).padStart(3, '0'); });
+  const INITIAL_VISIBLE = 9;
 
   function linkHTML(l) {
     const map = {
@@ -1783,7 +2167,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     const stack = p.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join('');
     const links = p.links.length
       ? `<div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-dashed border-[rgba(157,78,221,.3)]">${p.links.map(linkHTML).join('')}</div>`
-      : `<div class="mt-5 pt-4 border-t border-dashed border-[rgba(157,78,221,.3)] mono text-[.62rem] tracking-[.1em] uppercase text-muted"><i class="fa-solid fa-lock mr-1.5"></i>internal work · code not public</div>`;
+      : !p.private ? '' : `<div class="mt-5 pt-4 border-t border-dashed border-[rgba(157,78,221,.3)] mono text-[.62rem] tracking-[.1em] uppercase text-muted"><i class="fa-solid fa-lock mr-1.5"></i>internal work · code not public</div>`;
     return `
       <article class="pcard tcard group p-4 sm:p-5 ${p.wide ? 'md:col-span-2' : ''}" data-cat="${p.cat}" data-id="${p.id}">
         <div class="thumb holo relative grid place-items-center">
@@ -1795,6 +2179,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         <div class="mt-4 mono text-[.64rem] tracking-[.12em] uppercase text-cyan">${esc(p.org)} · ${esc(p.date)}</div>
         <h3 class="display font-bold text-lg sm:text-xl mt-1.5 leading-snug">${esc(p.title)}</h3>
         ${p.sub ? `<div class="text-pink-soft text-sm mt-0.5">${esc(p.sub)}</div>` : ''}
+        ${p.role ? `<div class="mono text-[.66rem] leading-relaxed text-[#bda6d1] mt-2"><span class="text-pink">role →</span> ${esc(p.role)}</div>` : ''}
         <div class="faces mt-4 flex-1">
           <div class="face face-impact" aria-hidden="false">
             <div class="flex items-end gap-3 flex-wrap">
@@ -2123,8 +2508,9 @@ details.log[open] .log-list { animation: logIn .4s ease; }
      NAV — active section + deep links
      ========================================================= */
   function initNav() {
-    const links = Array.from(document.querySelectorAll('.nav-link'));
-    const ids = ['about', 'experience', 'projects', 'skills', 'academic', 'recognition'];
+    const links = Array.from(document.querySelectorAll('.nav-link, .side-link'));
+    const ids = ['about', 'experience', 'projects', 'skills', 'academic', 'recognition', 'contact'];
+    const railFill = document.getElementById('sideRailFill');
 
     function routeTo(link) {
       if (link.dataset.node) network.select(link.dataset.node);
@@ -2140,17 +2526,27 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         if (!entry.isIntersecting) return;
         const id = entry.target.id;
         links.forEach((l) => l.classList.toggle('active', l.dataset.sec === id));
-        const active = links.find((l) => l.dataset.sec === id);
-        if (active) {
-          const nav = active.closest('.nav-scroll');
-          const left = active.offsetLeft - nav.clientWidth / 2 + active.offsetWidth / 2;
+        const topLink = links.find((l) => l.dataset.sec === id && l.closest('.nav-scroll'));
+        if (topLink) {
+          const nav = topLink.closest('.nav-scroll');
+          const left = topLink.offsetLeft - nav.clientWidth / 2 + topLink.offsetWidth / 2;
           nav.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
     ids.forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
     const hero = document.getElementById('hero');
-    new IntersectionObserver(([e]) => { if (e.isIntersecting) links.forEach((l) => l.classList.remove('active')); }, { rootMargin: '-45% 0px -50% 0px' }).observe(hero);
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) links.forEach((l) => l.classList.toggle('active', l.dataset.sec === 'hero'));
+    }, { rootMargin: '-45% 0px -50% 0px' }).observe(hero);
+
+    // side panel progress rail
+    const updateRail = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (railFill) railFill.style.height = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+    };
+    window.addEventListener('scroll', updateRail, { passive: true });
+    updateRail();
   }
 
   /* =========================================================
@@ -2194,7 +2590,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     initTiles();
     initNav();
     initReveal();
-    new LorenzAttractor(document.getElementById('lorenz'));
+    new WingCanvas(document.getElementById('wingCanvas'));
     new GoldDust(15);
     if (finePointer && !reduceMotion) {
       new ButterflyCursor();
