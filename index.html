@@ -440,6 +440,10 @@ html.bfly-cursor-on input, html.bfly-cursor-on textarea { cursor: text !importan
 .pipe li:not(:last-child)::after { content: ''; position: absolute; left: 1.15rem; bottom: calc(-.55rem - 1px); width: 1px; height: .55rem; background: var(--cyan); opacity: .6; }
 .pipe li:hover { border-color: var(--cyan); box-shadow: var(--glow-c); background: rgba(0,240,212,.06); }
 .pipe li em { font-style: normal; color: var(--gold); }
+.pipe.client li { border-color: var(--border-p); background: rgba(255,45,155,.03); }
+.pipe.client li::before { color: var(--pink-soft); }
+.pipe.client li:not(:last-child)::after { background: var(--pink); }
+.pipe.client li:hover { border-color: var(--pink); box-shadow: var(--glow-p); background: rgba(255,45,155,.07); }
 .chip-row { display: flex; flex-wrap: wrap; gap: .4rem; }
 .chip {
   font-family: 'Space Mono', monospace; font-size: .64rem; letter-spacing: .04em;
@@ -972,16 +976,22 @@ details.log[open] .log-list { animation: logIn .4s ease; }
               </div>
             </div>
             <div>
-              <div class="col-head glow-cyan mb-3">▸ Data Pipeline Infrastructure</div>
+              <div class="col-head glow-pink mb-3">▸ Client &amp; Strategic Sourcing</div>
+              <ul class="pipe client">
+                <li>Clients — <em>Fortune 300</em> in Construction &amp; IT across <em>18</em> U.S. states</li>
+                <li>Sourcing — <em>70+</em> end-to-end strategic sourcing projects, <em>$159M</em> spend</li>
+                <li>Stakeholders — <em>20+</em> managed at once · <em>0</em> escalations · <em>100%</em> client participation</li>
+                <li>Suppliers — spend &amp; contract analysis → data-driven negotiations, <em>17.7×</em> ROI</li>
+              </ul>
+              <div class="col-head glow-cyan mb-3 mt-5">▸ Data Pipeline Infrastructure</div>
               <ul class="pipe">
                 <li>Ingest — <em>50+</em> trackers &amp; <em>80+</em> RFP responses auto-loaded into Excel pipelines</li>
                 <li>Transform — Python + Power Query ETL for spend &amp; contract analysis</li>
                 <li>Automate — VBA tooling, <em>~15%</em> efficiency gain, ~12% faster turnaround</li>
                 <li>Visualize — Power BI KPI &amp; supplier dashboards</li>
-                <li>Decide — data-driven supplier negotiations → <em>$9.2M</em> saved</li>
                 <li>Scale — trained 15 teammates incl. Sr. Managers on analytics + GenAI (Copilot)</li>
               </ul>
-              <div class="chip-row mt-3"><span class="chip">Python</span><span class="chip">Power BI</span><span class="chip">Power Query</span><span class="chip">VBA</span><span class="chip">Spend Analysis</span><span class="chip">Stakeholder Mgmt</span></div>
+              <div class="chip-row mt-3"><span class="chip">Python</span><span class="chip">Power BI</span><span class="chip">Power Query</span><span class="chip">VBA</span><span class="chip">Strategic Sourcing</span><span class="chip">Supplier Negotiation</span><span class="chip">Spend Analysis</span><span class="chip">Client &amp; Stakeholder Mgmt</span></div>
             </div>
           </div>
           <details class="log mt-5">
@@ -2001,7 +2011,10 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         'Vanilla JS "layers" panel: stacked multi-day, multi-person outfit views with live chat updates'
       ],
       stack: ['Python', 'FastAPI', 'LiteLLM', 'Vertex AI (Gemini)', 'Vanilla JS', 'Cloud Run', 'pytest'],
-      links: []
+      links: [
+        { t: 'Live App', u: 'https://layer-lab-635182820659.us-east1.run.app/', k: 'demo' },
+        { t: 'GitHub', u: 'https://github.com/rishika1099/Tool-Calling-Agent', k: 'gh' }
+      ]
     },
     {
       cat: 'ai', icon: 'fa-chart-line',
