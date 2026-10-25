@@ -441,6 +441,9 @@ html.bfly-cursor-on input, html.bfly-cursor-on textarea { cursor: text !importan
 .pipe li:hover { border-color: var(--cyan); box-shadow: var(--glow-c); background: rgba(0,240,212,.06); }
 .pipe li em { font-style: normal; color: var(--gold); }
 .pipe.client li { border-color: var(--border-p); background: rgba(255,45,155,.03); }
+.pipe.fill { display: flex; flex-direction: column; flex: 1; }
+.pipe.fill li { flex: 1; display: flex; align-items: center; }
+.pipe.fill li::before { top: 50%; transform: translateY(-50%); }
 .pipe.client li::before { color: var(--pink-soft); }
 .pipe.client li:not(:last-child)::after { background: var(--pink); }
 .pipe.client li:hover { border-color: var(--pink); box-shadow: var(--glow-p); background: rgba(255,45,155,.07); }
@@ -962,34 +965,35 @@ details.log[open] .log-list { animation: logIn .4s ease; }
             </div>
             <span class="badge b-full">Full-Time</span>
           </div>
-          <div class="grid md:grid-cols-[.9fr_1.1fr] gap-6 mt-6">
+          <div class="grid md:grid-cols-2 gap-6 mt-6">
             <div>
               <div class="col-head gold mb-3">▸ Executive Metrics</div>
-              <div class="grid grid-cols-2 gap-2.5">
+              <div class="grid grid-cols-2 lg:grid-cols-3 gap-2.5">
                 <div class="mtile col-span-2"><div class="v text-[2rem]">$159M</div><div class="l">Strategic sourcing spend · 18 U.S. states · Fortune 300</div></div>
                 <div class="mtile"><div class="v">$9.2M</div><div class="l">Savings delivered (5.8%)</div></div>
                 <div class="mtile"><div class="v">17.7×</div><div class="l">ROI via data-driven negotiations</div></div>
                 <div class="mtile"><div class="v">70+</div><div class="l">End-to-end projects led</div></div>
                 <div class="mtile"><div class="v">250+</div><div class="l">Person-hours automated</div></div>
                 <div class="mtile"><div class="v">20+</div><div class="l">Stakeholders · 0 escalations</div></div>
-                <div class="mtile"><div class="v">Q2 '24</div><div class="l">Kudos Innovator Award</div></div>
+                <div class="mtile lg:col-span-2"><div class="v">Q2 '24</div><div class="l">GEP Kudos Innovator Award</div></div>
               </div>
-            </div>
-            <div>
-              <div class="col-head glow-pink mb-3">▸ Client &amp; Strategic Sourcing</div>
+              <div class="col-head glow-pink mb-3 mt-5">▸ Client &amp; Strategic Sourcing</div>
               <ul class="pipe client">
-                <li>Clients — <em>Fortune 300</em> in Construction &amp; IT across <em>18</em> U.S. states</li>
-                <li>Sourcing — <em>70+</em> end-to-end strategic sourcing projects, <em>$159M</em> spend</li>
-                <li>Stakeholders — <em>20+</em> managed at once · <em>0</em> escalations · <em>100%</em> client participation</li>
-                <li>Suppliers — spend &amp; contract analysis → data-driven negotiations, <em>17.7×</em> ROI</li>
+                <li>Clients — <em>Fortune 300</em> · Construction &amp; IT · <em>18</em> U.S. states</li>
+                <li>Sourcing — <em>70+</em> end-to-end projects · <em>$159M</em> spend</li>
+                <li>Stakeholders — <em>20+</em> · <em>0</em> escalations · <em>100%</em> participation</li>
+                <li>Suppliers — spend &amp; contract analysis → negotiation levers</li>
               </ul>
-              <div class="col-head glow-cyan mb-3 mt-5">▸ Data Pipeline Infrastructure</div>
-              <ul class="pipe">
-                <li>Ingest — <em>50+</em> trackers &amp; <em>80+</em> RFP responses auto-loaded into Excel pipelines</li>
-                <li>Transform — Python + Power Query ETL for spend &amp; contract analysis</li>
-                <li>Automate — VBA tooling, <em>~15%</em> efficiency gain, ~12% faster turnaround</li>
-                <li>Visualize — Power BI KPI &amp; supplier dashboards</li>
-                <li>Scale — trained 15 teammates incl. Sr. Managers on analytics + GenAI (Copilot)</li>
+            </div>
+            <div class="flex flex-col">
+              <div class="col-head glow-cyan mb-3">▸ Data Pipeline Infrastructure</div>
+              <ul class="pipe fill">
+                <li><span>Ingest — <em>50+</em> trackers &amp; <em>80+</em> RFP responses auto-loaded into Excel pipelines</span></li>
+                <li><span>Transform — Python + Power Query ETL for spend &amp; contract analysis</span></li>
+                <li><span>Automate — VBA tooling, <em>~15%</em> efficiency gain, ~12% faster turnaround</span></li>
+                <li><span>Visualize — Power BI KPI &amp; supplier dashboards</span></li>
+                <li><span>Decide — dashboards &amp; benchmarks turned into data-driven supplier negotiations → <em>$9.2M</em> saved (<em>5.8%</em>) at <em>17.7×</em> ROI</span></li>
+                <li><span>Scale — trained <em>15</em> teammates incl. Sr. Managers on analytics + GenAI (Copilot), cutting <em>3–4 hrs</em> per project</span></li>
               </ul>
               <div class="chip-row mt-3"><span class="chip">Python</span><span class="chip">Power BI</span><span class="chip">Power Query</span><span class="chip">VBA</span><span class="chip">Strategic Sourcing</span><span class="chip">Supplier Negotiation</span><span class="chip">Spend Analysis</span><span class="chip">Client &amp; Stakeholder Mgmt</span></div>
             </div>
