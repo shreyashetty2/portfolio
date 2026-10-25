@@ -541,31 +541,57 @@ details.log[open] .log-list { animation: logIn .4s ease; }
 .plink.gd { border-color: rgba(255,224,102,.25); color: var(--gold); }
 .plink.gd:hover { border-color: var(--gold); box-shadow: var(--glow-g); }
 
-/* ---------- project garden ---------- */
+/* ---------- project garden (network blooms) ---------- */
 .garden { border-radius: 20px; }
-.garden svg { display: block; width: 100%; height: auto; }
-.garden .soil { opacity: .22; }
-.garden .stem { fill: none; stroke: rgba(0,240,212,.55); stroke-width: 2.4; stroke-linecap: round; }
-.garden .leaf { fill: rgba(0,240,212,.22); stroke: rgba(0,240,212,.5); stroke-width: 1; }
-.garden .flower { cursor: pointer; outline: none; }
-.garden .petals { transform-box: fill-box; transform-origin: center; animation: petalSpin 22s linear infinite; transition: scale .35s ease; }
-.garden .flower:hover .petals, .garden .flower:focus-visible .petals { scale: 1.14; }
+.garden svg, .hero-garden svg { display: block; width: 100%; height: auto; }
+.gsvg .base { stroke-width: 1; opacity: .45; }
+.gsvg .tick { opacity: .7; }
+.gsvg .stem { fill: none; stroke-width: 1.3; stroke-dasharray: 2 4; opacity: .75; animation: dash 2.4s linear infinite; }
+.gsvg .stem-node { opacity: .9; }
+.gsvg .leaf { fill: none; stroke-width: 1; opacity: .6; }
+.gsvg .flower { cursor: pointer; outline: none; }
+.gsvg .petals { transform-box: fill-box; transform-origin: center; animation: petalSpin 40s linear infinite; transition: scale .4s ease; }
+.gsvg .flower:hover .petals, .gsvg .flower:focus-visible .petals { scale: 1.12; }
 @keyframes petalSpin { to { rotate: 360deg; } }
-.garden .bud { fill: #130d22; stroke: var(--gold); stroke-width: 1.6; }
-.garden .bud-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; fill: var(--gold); }
-.garden .glabel { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: .16em; fill: #d8c4ea; text-transform: uppercase; }
-.garden svg[data-mode="compact"] .glabel { font-size: 17px; }
-.garden svg[data-mode="compact"] .bud-n { font-size: 16px; }
-.garden .flower:hover .glabel, .garden .flower:focus-visible .glabel { fill: #fff; }
-.garden .thread { fill: none; stroke-width: 1; stroke-dasharray: 3 5; opacity: .35; animation: dash 1.6s linear infinite; }
-.garden .gfly { cursor: pointer; outline: none; }
-.garden .gfly-scale { transform-box: fill-box; transform-origin: center; transition: scale .3s cubic-bezier(.3,1.6,.5,1); }
-.garden .gfly:hover .gfly-scale, .garden .gfly:focus-visible .gfly-scale, .garden .gfly.picked .gfly-scale { scale: 1.45; }
-.garden .gfly-wings { transform-box: fill-box; transform-origin: center; animation: gflap .26s ease-in-out infinite alternate; }
+.gsvg .petal { stroke-width: 1; fill-opacity: .06; stroke-opacity: .8; transition: fill-opacity .3s; }
+.gsvg .flower:hover .petal { fill-opacity: .14; }
+.gsvg .rib { stroke-width: .7; stroke-dasharray: 1.5 3; opacity: .55; }
+.gsvg .pnode { opacity: .95; }
+.gsvg .ring { fill: none; stroke-width: 1; stroke-dasharray: 2 3; opacity: .7; }
+.gsvg .bud { fill: #0d0919; stroke: var(--gold); stroke-width: 1.4; }
+.gsvg .bud-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; fill: var(--gold); }
+.gsvg .glabel { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: .16em; fill: #d8c4ea; text-transform: uppercase; }
+.gsvg[data-mode="compact"] .glabel { font-size: 17px; }
+.gsvg[data-mode="compact"] .bud-n { font-size: 15px; }
+.gsvg[data-mode="ring"] .glabel { font-size: 15px; }
+.gsvg .flower:hover .glabel, .gsvg .flower:focus-visible .glabel { fill: #fff; }
+.gsvg .thread { fill: none; stroke-width: 1; stroke-dasharray: 3 5; opacity: .35; animation: dash 1.6s linear infinite; }
+.gsvg .hub-link { stroke-width: 1.1; stroke-dasharray: 3 6; opacity: .45; animation: dash 1.8s linear infinite; }
+.gsvg .hub-core { fill: #130d22; stroke: var(--pink); stroke-width: 2; }
+.gsvg .hub-pulse { fill: none; stroke: var(--pink); transform-box: fill-box; transform-origin: center; animation: halo 2.6s ease-out infinite; }
+.gsvg .hub-txt { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; fill: #fff; }
+.gsvg .hub-sub { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: .14em; fill: #bda6d1; text-transform: uppercase; }
+.gsvg .gfly { cursor: pointer; outline: none; }
+.gsvg .gfly-scale { transform-box: fill-box; transform-origin: center; transition: scale .3s cubic-bezier(.3,1.6,.5,1); }
+.gsvg .gfly:hover .gfly-scale, .gsvg .gfly:focus-visible .gfly-scale, .gsvg .gfly.picked .gfly-scale { scale: 1.45; }
+.gsvg .gfly-wings { transform-box: fill-box; transform-origin: center; animation: gflap .26s ease-in-out infinite alternate; }
 @keyframes gflap { to { transform: scaleX(.5); } }
-.garden .gfly .gid { font-family: 'Space Mono', monospace; font-size: 9px; fill: #bda6d1; opacity: .75; }
-.garden svg[data-mode="compact"] .gfly .gid { font-size: 13px; }
-.garden .gfly.picked .gfly-wings { animation-duration: .1s; }
+.gsvg .gfly .gid { font-family: 'Space Mono', monospace; font-size: 9px; fill: #bda6d1; opacity: .8; }
+.gsvg[data-mode="compact"] .gfly .gid, .gsvg[data-mode="ring"] .gfly .gid { font-size: 12px; }
+.gsvg .gfly.picked .gfly-wings { animation-duration: .1s; }
+
+/* hero wings <-> garden switch */
+.hero-garden { position: absolute; inset: 0; z-index: 3; opacity: 0; transform: scale(.9); pointer-events: none; transition: opacity .6s ease .2s, transform .7s cubic-bezier(.2,.8,.2,1) .2s; }
+.wing-card canvas, .wing-card .hud, .wing-card .crosshair { transition: opacity .6s ease; }
+.wing-card.garden-on canvas, .wing-card.garden-on > .hud, .wing-card.garden-on .crosshair { opacity: 0; }
+.wing-card.garden-on .hero-garden { opacity: 1; transform: none; pointer-events: auto; }
+.wing-card.garden-on canvas { pointer-events: none; }
+.hero-switch { display: flex; gap: 4px; width: max-content; margin: 14px auto 0; padding: 4px; border-radius: 999px; border: 1px solid var(--border-p); background: var(--surface); }
+.hero-switch button { font-family: 'Space Mono', monospace; font-size: .7rem; letter-spacing: .06em; padding: .55rem 1.05rem; border-radius: 999px; color: #bda6d1; transition: color .3s, background .3s, box-shadow .3s; }
+.hero-switch button:hover { color: #fff; }
+.hero-switch button[aria-selected="true"] { color: #fff; background: linear-gradient(90deg, var(--pink), var(--purple)); box-shadow: var(--glow-p); }
+.hero-switch.beckon button[data-view="garden"] { animation: beckon 1.8s ease-in-out infinite; }
+@keyframes beckon { 0%,100% { box-shadow: 0 0 0 0 rgba(255,224,102,0); color: #bda6d1; } 50% { box-shadow: 0 0 0 2px rgba(255,224,102,.75), 0 0 22px rgba(255,224,102,.55); color: var(--gold); } }
 .garden-tip {
   position: absolute; z-index: 10; pointer-events: none; width: 250px; padding: .75rem .9rem; border-radius: 12px;
   background: rgba(19,13,34,.96); border: 1px solid var(--pink); box-shadow: var(--glow-p);
@@ -579,7 +605,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
 .garden-tip .gt-metric { font-family: 'Space Mono', monospace; font-size: .62rem; color: #a993bd; margin-top: .4rem; line-height: 1.5; }
 .garden-tip .gt-metric b { font-family: 'Syne', sans-serif; font-size: 1.05rem; color: var(--gold); text-shadow: var(--glow-g); margin-right: .35rem; }
 .garden-tip .gt-cta { font-family: 'Space Mono', monospace; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--pink-soft); margin-top: .5rem; }
-.pcard.spotlight { animation: spotlight 2.6s ease; border-color: var(--gold); }
+.spotlight { animation: spotlight 2.6s ease; border-color: var(--gold) !important; }
 @keyframes spotlight {
   0% { box-shadow: 0 0 0 0 rgba(255,224,102,0); }
   18% { box-shadow: 0 0 0 3px rgba(255,224,102,.9), 0 0 60px rgba(255,45,155,.65); }
@@ -837,8 +863,17 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         <div class="hud top-4 right-5 text-right">nodes <span class="g" id="hudNodes">0</span></div>
         <div class="hud bottom-4 left-5">state → <span class="g" id="hudState">ASSEMBLING</span></div>
         <div class="hud bottom-4 right-5 text-right">entropy <b id="hudEntropy">1.00</b></div>
+        <div class="hero-garden" id="heroGarden" aria-hidden="true">
+          <div class="hud bottom-4 left-5"><b>project.garden</b>(career, projects)</div>
+          <svg id="heroGardenSvg" class="gsvg" role="group" aria-label="Project garden: butterflies for every role and project around category flowers"></svg>
+          <div class="garden-tip" id="heroGardenTip" role="tooltip"></div>
+        </div>
       </div>
-      <p class="text-center mono text-[.62rem] tracking-[.14em] uppercase text-muted mt-3">touch the wings for chaos · move away for a decision</p>
+      <div class="hero-switch beckon" id="heroSwitch" role="tablist" aria-label="Hero visual">
+        <button type="button" role="tab" data-view="wings" aria-selected="true">🦋 Data Wings</button>
+        <button type="button" role="tab" data-view="garden" aria-selected="false">🌸 Project Garden</button>
+      </div>
+      <p class="text-center mono text-[.62rem] tracking-[.14em] uppercase text-muted mt-3" id="heroHint">touch the wings for chaos · or open the garden to explore</p>
     </div>
   </div>
 </section>
@@ -918,7 +953,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     <ol class="timeline space-y-8">
 
       <!-- TD Bank -->
-      <li class="tl-item live reveal">
+      <li id="exp-td" class="tl-item live reveal">
         <span class="tl-dot" aria-hidden="true"></span>
         <article class="tcard p-5 sm:p-7">
           <div class="flex flex-wrap items-start justify-between gap-3">
@@ -950,7 +985,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       </li>
 
       <!-- ACS -->
-      <li class="tl-item reveal">
+      <li id="exp-acs" class="tl-item reveal">
         <span class="tl-dot" aria-hidden="true"></span>
         <article class="tcard p-5 sm:p-7">
           <div class="flex flex-wrap items-start justify-between gap-3">
@@ -1000,7 +1035,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       </li>
 
       <!-- GEP Senior Analyst -->
-      <li class="tl-item reveal">
+      <li id="exp-gep" class="tl-item reveal">
         <span class="tl-dot" aria-hidden="true"></span>
         <article class="tcard p-5 sm:p-7">
           <div class="flex flex-wrap items-start justify-between gap-3">
@@ -1058,7 +1093,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       </li>
 
       <!-- GEP Intern -->
-      <li class="tl-item reveal">
+      <li id="exp-gep-intern" class="tl-item reveal">
         <span class="tl-dot" aria-hidden="true"></span>
         <article class="tcard p-5 sm:p-7">
           <div class="flex flex-wrap items-start justify-between gap-3">
@@ -1122,10 +1157,10 @@ details.log[open] .log-list { animation: logIn .4s ease; }
 
     <div class="garden tcard relative mb-8 reveal" id="garden">
       <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4">
-        <div class="mono text-[.68rem] text-[#bda6d1]"><span class="text-pink">//</span> project.garden — hover a butterfly, tap it to fly to that project · tap a flower to filter</div>
+        <div class="mono text-[.68rem] text-[#bda6d1]"><span class="text-pink">//</span> project.garden — hover a butterfly, tap it to fly to that project or role · tap a flower to filter</div>
         <button type="button" class="plink gd" id="gardenRandom"><i class="fa-solid fa-wand-magic-sparkles"></i> Surprise me</button>
       </div>
-      <svg id="gardenSvg" role="group" aria-label="Project garden: each butterfly is a project, gathered around its category flower"></svg>
+      <svg id="gardenSvg" class="gsvg" role="group" aria-label="Project garden: each butterfly is a project, gathered around its category flower"></svg>
       <div class="garden-tip" id="gardenTip" role="tooltip"></div>
     </div>
 
@@ -1941,12 +1976,43 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       if (this.running) return;
       this.running = true;
       const tick = () => {
-        if (!this.visible) { this.running = false; return; }
+        if (!this.visible || this.suspended) { this.running = false; return; }
         this.step();
         this.draw();
         requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
+    }
+
+    // burst every node outward, then pause while the garden is showing
+    explode() {
+      this.mouse = null;
+      this.nodes.forEach((p) => {
+        const dx = p.x - this.cx;
+        const dy = p.y - this.cy;
+        const d = Math.hypot(dx, dy) || 1;
+        p.vx += (dx / d) * (8 + Math.random() * 10);
+        p.vy += (dy / d) * (8 + Math.random() * 10);
+      });
+      clearTimeout(this.suspendTimer);
+      this.suspendTimer = setTimeout(() => { this.suspended = true; }, 750);
+    }
+
+    // come back from chaos: scatter, then the springs reassemble the wings
+    reform() {
+      clearTimeout(this.suspendTimer);
+      this.suspended = false;
+      this.nodes.forEach((p) => {
+        p.x = Math.random() * this.w;
+        p.y = Math.random() * this.h;
+        p.vx = 0;
+        p.vy = 0;
+      });
+      if (reduceMotion) {
+        this.nodes.forEach((p) => { p.x = this.cx + p.hx * this.S; p.y = this.cy + p.hy * this.S; });
+        this.draw();
+      }
+      this.loop();
     }
   }
 
@@ -2356,178 +2422,307 @@ details.log[open] .log-list { animation: logIn .4s ease; }
   }
 
   /* =========================================================
-     03b. PROJECT GARDEN — every project is a butterfly
+     03b. PROJECT GARDEN — every role & project is a butterfly
      ========================================================= */
-  const GARDEN_CATS = [
+  const GARDEN_GROUPS = [
+    { key: 'career', label: 'Career', color: '#f0dff7', glow: 'rgba(240,223,247,.85)' },
     { key: 'ai', label: 'AI & Agents', color: '#ff2d9b', glow: 'rgba(255,45,155,.9)' },
     { key: 'ml', label: 'ML & Statistics', color: '#00f0d4', glow: 'rgba(0,240,212,.85)' },
     { key: 'analytics', label: 'Analytics', color: '#ffe066', glow: 'rgba(255,224,102,.9)' },
     { key: 'build', label: 'Build & Design', color: '#c77dff', glow: 'rgba(199,125,255,.9)' }
   ];
+  const CAREER = [
+    { id: 'E1', target: 'exp-td', title: 'Capstone Researcher — Agentic AI Marketing Decision Lab', org: 'TD Bank × Columbia', date: 'Sep 2026 – Present', metric: 'Live', metricLbl: 'agentic AI capstone with TD Bank, in progress' },
+    { id: 'E2', target: 'exp-acs', title: 'Predictive Analytics Data Science Intern', org: 'ACS', date: 'Jun – Aug 2026', metric: '0.804', metricLbl: 'ROC-AUC on 178K+ cases, beating the production benchmark' },
+    { id: 'E3', target: 'exp-gep', title: 'Senior Analyst — Consulting', org: 'GEP Worldwide', date: 'Aug 2023 – Jul 2025', metric: '$159M', metricLbl: 'strategic sourcing spend · $9.2M saved' },
+    { id: 'E4', target: 'exp-gep-intern', title: 'Intern → Senior Analyst', org: 'GEP Worldwide', date: 'Feb – Jul 2023', metric: '$35M', metricLbl: 'spend benchmarked across 160+ contracts' }
+  ];
 
-  function initGarden(api) {
-    const NS = 'http://www.w3.org/2000/svg';
-    const wrap = document.getElementById('garden');
-    const svg = document.getElementById('gardenSvg');
-    const tip = document.getElementById('gardenTip');
-    let mode = null;
-    let flies = [];
-    let visible = true;
-    let running = false;
+  function spotlight(el) {
+    el.classList.remove('spotlight');
+    void el.offsetWidth;
+    el.classList.add('spotlight');
+    setTimeout(() => el.classList.remove('spotlight'), 2700);
+  }
 
-    const el = (tag, attrs = {}, parent) => {
-      const n = document.createElementNS(NS, tag);
+  function focusExperience(targetId) {
+    const li = document.getElementById(targetId);
+    if (!li) return;
+    li.classList.add('in');
+    li.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    spotlight(li.querySelector('article'));
+  }
+
+  class Garden {
+    constructor({ wrap, svg, tip, layout = 'auto', projectsApi, randomBtn }) {
+      this.wrap = wrap;
+      this.svg = svg;
+      this.tip = tip;
+      this.layoutPref = layout;
+      this.api = projectsApi;
+      this.mode = null;
+      this.flies = [];
+      this.visible = true;
+      this.running = false;
+      this.intro = 1;
+      this.groups = GARDEN_GROUPS.map((g) => ({
+        ...g,
+        items: g.key === 'career'
+          ? CAREER.map((c) => ({ ...c, kind: 'career', gid: c.id, tag: c.org }))
+          : PROJECTS.filter((p) => p.cat === g.key).map((p) => ({ ...p, kind: 'project', gid: p.id, tag: `P/${p.id}` }))
+      }));
+      if (randomBtn) randomBtn.addEventListener('click', () => this.surprise());
+      this.render();
+      new ResizeObserver(() => this.render()).observe(wrap);
+      new IntersectionObserver(([entry]) => { this.visible = entry.isIntersecting; if (this.visible) this.loop(); }).observe(wrap);
+    }
+
+    el(tag, attrs = {}, parent) {
+      const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
       Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
       if (parent) parent.appendChild(n);
       return n;
-    };
+    }
 
-    function render() {
-      const next = wrap.clientWidth < 640 ? 'compact' : 'wide';
-      if (next === mode) return;
-      mode = next;
-      const wide = mode === 'wide';
-      const W = wide ? 1000 : 600;
-      const H = wide ? 400 : 725;
-      const spots = wide
-        ? [[130, 255], [377, 255], [623, 255], [870, 255]]
-        : [[150, 245], [450, 245], [150, 580], [450, 580]];
-      const flySize = wide ? 38 : 50;
-      const radius = wide ? 118 : 122;
-      svg.innerHTML = '';
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-      svg.dataset.mode = mode;
+    spec(mode) {
+      if (mode === 'ring') {
+        const c = [350, 352];
+        const R = 206;
+        const spots = this.groups.map((_, i) => {
+          const a = (-90 + i * 72) * (Math.PI / 180);
+          return { x: c[0] + Math.cos(a) * R, y: c[1] + Math.sin(a) * R, dir: -90 + i * 72 };
+        });
+        return { W: 700, H: 700, spots, hub: c, fly: 42, radius: 98, spread: 124, bloom: 0.8 };
+      }
+      if (mode === 'compact') {
+        const pts = [[300, 230], [150, 560], [450, 560], [150, 890], [450, 890]];
+        return { W: 600, H: 1060, spots: pts.map(([x, y]) => ({ x, y, dir: -90 })), fly: 48, radius: 112, spread: 150, bloom: 1.15 };
+      }
+      return { W: 1100, H: 400, spots: this.groups.map((_, i) => ({ x: 110 + i * 220, y: 250, dir: -90 })), fly: 36, radius: 98, spread: 140, bloom: 1 };
+    }
 
-      const defs = el('defs', {}, svg);
-      GARDEN_CATS.forEach((c) => {
-        const g = el('radialGradient', { id: `petal-${c.key}`, cx: '50%', cy: '70%', r: '75%' }, defs);
-        el('stop', { offset: '0%', 'stop-color': '#fff6c2', 'stop-opacity': '.95' }, g);
-        el('stop', { offset: '45%', 'stop-color': c.color, 'stop-opacity': '.9' }, g);
-        el('stop', { offset: '100%', 'stop-color': c.color, 'stop-opacity': '.15' }, g);
-      });
-
-      const threadLayer = el('g', {}, svg);
-      const flowerLayer = el('g', {}, svg);
-      const flyLayer = el('g', {}, svg);
-      flies = [];
-
-      GARDEN_CATS.forEach((c, ci) => {
-        const [fx, fy] = spots[ci];
-        const members = PROJECTS.filter((p) => p.cat === c.key);
-
-        // flower: soil glow, curved stem, leaves, spinning petals, counter bud
-        const fg = el('g', { class: 'flower', tabindex: '0', role: 'button', 'aria-label': `Show ${c.label} projects (${members.length})` }, flowerLayer);
-        el('ellipse', { class: 'soil', cx: fx, cy: fy + 84, rx: 72, ry: 9, fill: c.color }, fg);
-        el('path', { class: 'stem', d: `M${fx} ${fy + 84} C${fx - 14} ${fy + 60} ${fx + 12} ${fy + 34} ${fx} ${fy + 12}` }, fg);
-        el('ellipse', { class: 'leaf', cx: fx - 13, cy: fy + 58, rx: 12, ry: 5, transform: `rotate(-28 ${fx - 13} ${fy + 58})` }, fg);
-        el('ellipse', { class: 'leaf', cx: fx + 12, cy: fy + 42, rx: 11, ry: 4.5, transform: `rotate(24 ${fx + 12} ${fy + 42})` }, fg);
-        const bloom = el('g', { transform: `translate(${fx} ${fy})` }, fg);
-        el('circle', { r: 46, fill: c.color, opacity: '.08' }, bloom);
-        const petals = el('g', { class: 'petals' }, bloom);
-        for (let k = 0; k < 8; k++) {
-          el('ellipse', { rx: 10, ry: 23, cy: -17, fill: `url(#petal-${c.key})`, transform: `rotate(${k * 45})`, style: `filter: drop-shadow(0 0 6px ${c.glow})` }, petals);
+    drawBloom(parent, g, x, y, s) {
+      const bloom = this.el('g', { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+      this.el('circle', { r: 46, fill: g.color, opacity: '.05' }, bloom);
+      const petals = this.el('g', { class: 'petals', style: `filter: drop-shadow(0 0 4px ${g.glow})` }, bloom);
+      const L = 36;
+      const r0 = 11;
+      const w = 10;
+      for (let k = 0; k < 6; k++) {
+        const pg = this.el('g', { transform: `rotate(${k * 60})` }, petals);
+        const left = [];
+        for (let i = 0; i <= 4; i++) {
+          const t = i / 4;
+          left.push([-w * Math.sin(Math.PI * t), -r0 - (L - r0) * t]);
         }
-        el('circle', { class: 'bud', r: 13 }, bloom);
-        const n = el('text', { class: 'bud-n', 'text-anchor': 'middle', dy: '4.5' }, bloom);
-        n.textContent = String(members.length);
-        const label = el('text', { class: 'glabel', x: fx, y: fy + (wide ? 112 : 120), 'text-anchor': 'middle' }, fg);
-        label.textContent = c.label;
-        const pick = () => api.filter(c.key);
+        const right = left.slice(1, -1).reverse().map(([px, py]) => [-px, py]);
+        const pts = left.concat(right);
+        this.el('path', { class: 'petal', d: `M${pts.map((pt) => pt.map((v) => v.toFixed(1)).join(' ')).join(' L')} Z`, stroke: g.color, fill: g.color }, pg);
+        this.el('line', { class: 'rib', x1: 0, y1: -r0, x2: 0, y2: -L, stroke: g.color }, pg);
+        pts.forEach(([px, py], i) => this.el('circle', { class: 'pnode', cx: px.toFixed(1), cy: py.toFixed(1), r: i === 4 ? 2.4 : 1.5, fill: i === 4 ? '#fff6c2' : g.color }, pg));
+      }
+      this.el('circle', { class: 'ring', r: 16, stroke: g.color }, bloom);
+      const hex = Array.from({ length: 6 }, (_, i) => {
+        const a = (i * 60 - 90) * (Math.PI / 180);
+        return `${(Math.cos(a) * 11).toFixed(1)},${(Math.sin(a) * 11).toFixed(1)}`;
+      }).join(' ');
+      this.el('polygon', { class: 'bud', points: hex }, bloom);
+      const n = this.el('text', { class: 'bud-n', 'text-anchor': 'middle', dy: '4.3' }, bloom);
+      n.textContent = String(g.items.length);
+    }
+
+    render() {
+      const next = this.layoutPref === 'ring' ? 'ring' : (this.wrap.clientWidth < 640 ? 'compact' : 'wide');
+      if (next === this.mode) return;
+      this.mode = next;
+      const sp = this.spec(next);
+      const ring = next === 'ring';
+      this.svg.innerHTML = '';
+      this.svg.setAttribute('viewBox', `0 0 ${sp.W} ${sp.H}`);
+      this.svg.dataset.mode = next;
+      const hubLayer = this.el('g', {}, this.svg);
+      const threadLayer = this.el('g', {}, this.svg);
+      const flowerLayer = this.el('g', {}, this.svg);
+      const flyLayer = this.el('g', {}, this.svg);
+      this.flies = [];
+      this.hub = sp.hub || null;
+
+      if (ring) {
+        const [hx, hy] = sp.hub;
+        sp.spots.forEach((spot, i) => this.el('line', { class: 'hub-link', x1: hx, y1: hy, x2: spot.x, y2: spot.y, stroke: this.groups[i].color }, hubLayer));
+        this.el('circle', { class: 'hub-pulse', cx: hx, cy: hy, r: 34 }, hubLayer);
+        this.el('circle', { class: 'hub-core', cx: hx, cy: hy, r: 34, style: 'filter: drop-shadow(0 0 10px rgba(255,45,155,.7))' }, hubLayer);
+        const t = this.el('text', { class: 'hub-txt', x: hx, y: hy + 8, 'text-anchor': 'middle' }, hubLayer);
+        t.textContent = 'SS';
+      }
+
+      this.groups.forEach((g, gi) => {
+        const { x: fx, y: fy, dir } = sp.spots[gi];
+        const fg = this.el('g', { class: 'flower', tabindex: '0', role: 'button', 'aria-label': `${g.key === 'career' ? 'Go to experience' : `Show ${g.label} projects`} (${g.items.length})` }, flowerLayer);
+
+        if (!ring) {
+          // data stem rising from a node baseline, with wireframe leaves
+          const base = fy + 84 * sp.bloom;
+          this.el('line', { class: 'base', x1: fx - 62, y1: base, x2: fx + 62, y2: base, stroke: g.color }, fg);
+          [-62, -31, 0, 31, 62].forEach((dx) => this.el('circle', { class: 'tick', cx: fx + dx, cy: base, r: 1.6, fill: g.color }, fg));
+          this.el('path', { class: 'stem', d: `M${fx} ${base} C${fx - 14} ${base - 26} ${fx + 12} ${fy + 34} ${fx} ${fy + 14}`, stroke: g.color }, fg);
+          [[fx - 4, base - 22], [fx + 3, fy + 40]].forEach(([cx, cy]) => this.el('circle', { class: 'stem-node', cx, cy, r: 2, fill: g.color }, fg));
+          this.el('polygon', { class: 'leaf', points: `${fx - 4},${base - 22} ${fx - 26},${base - 34} ${fx - 12},${base - 16}`, stroke: g.color }, fg);
+          this.el('polygon', { class: 'leaf', points: `${fx + 3},${fy + 40} ${fx + 24},${fy + 28} ${fx + 14},${fy + 46}`, stroke: g.color }, fg);
+        }
+        this.drawBloom(fg, g, fx, fy, sp.bloom);
+
+        // label: under the flower, or toward the hub in ring mode
+        let lx = fx;
+        let ly = fy + (next === 'compact' ? 125 : 112);
+        if (ring) {
+          const a = dir * (Math.PI / 180);
+          lx = fx - Math.cos(a) * 58;
+          ly = fy - Math.sin(a) * 58 + 5;
+        }
+        const label = this.el('text', { class: 'glabel', x: lx.toFixed(1), y: ly.toFixed(1), 'text-anchor': 'middle' }, fg);
+        label.textContent = g.label;
+        const pick = () => {
+          if (g.key === 'career') document.getElementById('experience').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          else this.api.filter(g.key);
+        };
         fg.addEventListener('click', pick);
         fg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
 
-        // butterflies fanned in an arc above their flower
-        members.forEach((p, i) => {
-          const a = (-165 + (150 * (i + 0.5)) / members.length) * (Math.PI / 180);
-          const ax = fx + Math.cos(a) * radius;
-          const ay = fy - 8 + Math.sin(a) * radius * 0.92;
-          const thread = el('path', { class: 'thread', stroke: c.color }, threadLayer);
-          const g = el('g', { class: 'gfly', tabindex: '0', role: 'button', 'aria-label': `P/${p.id} ${p.title} — go to project` }, flyLayer);
-          const body = el('g', {}, g);
-          const scale = el('g', { class: 'gfly-scale' }, body);
-          el('circle', { r: flySize * 0.7, fill: 'transparent' }, scale);
-          const wings = el('g', { class: 'gfly-wings', style: `color:${c.color}; filter: drop-shadow(0 0 7px ${c.glow}); animation-delay: -${(Math.random() * 0.3).toFixed(2)}s` }, scale);
-          el('use', { href: '#bfly', x: -flySize / 2, y: -flySize / 2, width: flySize, height: flySize }, wings);
-          const id = el('text', { class: 'gid', 'text-anchor': 'middle', y: flySize * 0.78 }, scale);
-          id.textContent = p.id;
-          const fly = { p, c, g, body, thread, fx, fy, ax, ay, ph: Math.random() * Math.PI * 2, sp: 0.012 + Math.random() * 0.01, rx: 7 + Math.random() * 6, ry: 5 + Math.random() * 5, hover: false, x: ax, y: ay };
-          flies.push(fly);
-
-          const show = () => { fly.hover = true; showTip(fly); };
-          const hide = () => { fly.hover = false; tip.classList.remove('on'); };
-          const go = () => launch(fly);
-          g.addEventListener('pointerenter', show);
-          g.addEventListener('pointerleave', hide);
-          g.addEventListener('focus', show);
-          g.addEventListener('blur', hide);
-          g.addEventListener('click', go);
-          g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+        // butterflies fanned outward from the flower
+        g.items.forEach((item, i) => {
+          const a = (dir - sp.spread / 2 + (sp.spread * (i + 0.5)) / g.items.length) * (Math.PI / 180);
+          const ax = fx + Math.cos(a) * sp.radius;
+          const ay = fy + Math.sin(a) * sp.radius * (ring ? 1 : 0.92) - (ring ? 0 : 8);
+          const thread = this.el('path', { class: 'thread', stroke: g.color }, threadLayer);
+          const label2 = item.kind === 'career' ? `${item.title} at ${item.org} — go to experience` : `P/${item.id} ${item.title} — go to project`;
+          const node = this.el('g', { class: 'gfly', tabindex: '0', role: 'button', 'aria-label': label2 }, flyLayer);
+          const body = this.el('g', {}, node);
+          const scale = this.el('g', { class: 'gfly-scale' }, body);
+          this.el('circle', { r: sp.fly * 0.7, fill: 'transparent' }, scale);
+          const wings = this.el('g', { class: 'gfly-wings', style: `color:${g.color}; filter: drop-shadow(0 0 7px ${g.glow}); animation-delay: -${(Math.random() * 0.3).toFixed(2)}s` }, scale);
+          this.el('use', { href: '#bfly', x: -sp.fly / 2, y: -sp.fly / 2, width: sp.fly, height: sp.fly }, wings);
+          const gid = this.el('text', { class: 'gid', 'text-anchor': 'middle', y: sp.fly * 0.8 }, scale);
+          gid.textContent = item.gid;
+          const fly = { item, g, node, body, thread, fx, fy, ax, ay, ph: Math.random() * Math.PI * 2, sp: 0.012 + Math.random() * 0.01, rx: 6 + Math.random() * 6, ry: 5 + Math.random() * 5, hover: false };
+          this.flies.push(fly);
+          const show = () => { fly.hover = true; this.showTip(fly); };
+          const hide = () => { fly.hover = false; this.tip.classList.remove('on'); };
+          const go = () => this.launch(fly);
+          node.addEventListener('pointerenter', show);
+          node.addEventListener('pointerleave', hide);
+          node.addEventListener('focus', show);
+          node.addEventListener('blur', hide);
+          node.addEventListener('click', go);
+          node.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
         });
       });
-      place();
+      this.place();
     }
 
-    function place() {
-      for (const f of flies) {
+    place() {
+      if (this.intro < 1) this.intro = Math.min(1, (performance.now() - this.introStart) / 900);
+      const e = 1 - Math.pow(1 - this.intro, 3);
+      for (const f of this.flies) {
         if (!f.hover && !reduceMotion) f.ph += f.sp;
-        f.x = f.ax + Math.cos(f.ph) * f.rx;
-        f.y = f.ay + Math.sin(f.ph * 1.3) * f.ry;
+        const tx = f.ax + Math.cos(f.ph) * f.rx;
+        const ty = f.ay + Math.sin(f.ph * 1.3) * f.ry;
+        const ox = this.hub ? this.hub[0] : f.fx;
+        const oy = this.hub ? this.hub[1] : f.fy;
+        const x = ox + (tx - ox) * e;
+        const y = oy + (ty - oy) * e;
         const tilt = Math.cos(f.ph) * 9;
-        f.body.setAttribute('transform', `translate(${f.x.toFixed(1)} ${f.y.toFixed(1)}) rotate(${tilt.toFixed(1)})`);
-        const mx = (f.fx + f.x) / 2 + (f.x < f.fx ? -18 : 18);
-        const my = (f.fy + f.y) / 2;
-        f.thread.setAttribute('d', `M${f.fx} ${f.fy - 12} Q${mx.toFixed(1)} ${my.toFixed(1)} ${f.x.toFixed(1)} ${f.y.toFixed(1)}`);
+        f.body.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${tilt.toFixed(1)}) scale(${(0.3 + 0.7 * e).toFixed(3)})`);
+        f.node.style.opacity = e.toFixed(3);
+        const mx = (f.fx + x) / 2 + (x < f.fx ? -16 : 16);
+        const my = (f.fy + y) / 2;
+        f.thread.setAttribute('d', `M${f.fx.toFixed(1)} ${f.fy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`);
+        f.thread.style.opacity = (0.35 * e).toFixed(3);
       }
     }
 
-    function showTip(f) {
-      const wr = wrap.getBoundingClientRect();
-      const br = f.g.getBoundingClientRect();
-      const x = Math.min(Math.max(br.left + br.width / 2 - wr.left, 135), wr.width - 135);
-      const top = br.top - wr.top;
-      const below = top < 150;
-      tip.classList.toggle('below', below);
-      tip.style.left = `${x}px`;
-      tip.style.top = `${below ? br.bottom - wr.top : top}px`;
-      tip.style.borderColor = f.c.color;
-      tip.innerHTML = `
-        <div class="gt-id" style="color:${f.c.color}">P/${esc(f.p.id)} · ${esc(f.c.label)} · ${esc(f.p.date)}</div>
-        <div class="gt-title">${esc(f.p.title)}</div>
-        <div class="gt-metric"><b>${esc(f.p.metric)}</b>${esc(f.p.metricLbl)}</div>
-        <div class="gt-cta">tap to fly there →</div>`;
-      tip.classList.add('on');
+    // butterflies fly out from the centre (used by the hero switch)
+    enter() {
+      this.intro = reduceMotion ? 1 : 0;
+      this.introStart = performance.now();
+      this.place();
+      this.loop();
     }
 
-    function launch(f) {
-      f.g.classList.add('picked');
-      tip.classList.remove('on');
+    showTip(f) {
+      const wr = this.wrap.getBoundingClientRect();
+      const br = f.node.getBoundingClientRect();
+      const half = Math.min(125, wr.width / 2 - 8);
+      const x = Math.min(Math.max(br.left + br.width / 2 - wr.left, half + 4), wr.width - half - 4);
+      const top = br.top - wr.top;
+      const below = top < 150;
+      this.tip.classList.toggle('below', below);
+      this.tip.style.left = `${x}px`;
+      this.tip.style.top = `${below ? br.bottom - wr.top : top}px`;
+      this.tip.style.borderColor = f.g.color;
+      const it = f.item;
+      this.tip.innerHTML = `
+        <div class="gt-id" style="color:${f.g.color}">${esc(it.tag)} · ${esc(f.g.label)} · ${esc(it.date)}</div>
+        <div class="gt-title">${esc(it.title)}</div>
+        <div class="gt-metric"><b>${esc(it.metric)}</b>${esc(it.metricLbl)}</div>
+        <div class="gt-cta">tap to fly there →</div>`;
+      this.tip.classList.add('on');
+    }
+
+    launch(f) {
+      f.node.classList.add('picked');
+      this.tip.classList.remove('on');
       setTimeout(() => {
-        f.g.classList.remove('picked');
-        api.focus(f.p.id);
+        f.node.classList.remove('picked');
+        if (f.item.kind === 'career') focusExperience(f.item.target);
+        else this.api.focus(f.item.id);
       }, reduceMotion ? 0 : 380);
     }
 
-    document.getElementById('gardenRandom').addEventListener('click', () => {
-      const f = flies[Math.floor(Math.random() * flies.length)];
-      showTip(f);
-      f.g.classList.add('picked');
-      setTimeout(() => { tip.classList.remove('on'); launch(f); }, reduceMotion ? 0 : 900);
-    });
+    surprise() {
+      const f = this.flies[Math.floor(Math.random() * this.flies.length)];
+      this.showTip(f);
+      f.node.classList.add('picked');
+      setTimeout(() => { this.tip.classList.remove('on'); this.launch(f); }, reduceMotion ? 0 : 900);
+    }
 
-    function loop() {
-      if (running || reduceMotion) return;
-      running = true;
+    loop() {
+      if (this.running || (reduceMotion && this.intro >= 1)) return;
+      this.running = true;
       const tick = () => {
-        if (!visible) { running = false; return; }
-        place();
+        if (!this.visible) { this.running = false; return; }
+        this.place();
         requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
     }
+  }
 
-    render();
-    new ResizeObserver(() => render()).observe(wrap);
-    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) loop(); }).observe(wrap);
+  function initHeroSwitch(wing, garden) {
+    const card = document.getElementById('wingCard');
+    const sw = document.getElementById('heroSwitch');
+    const hint = document.getElementById('heroHint');
+    const layer = document.getElementById('heroGarden');
+    const btns = Array.from(sw.querySelectorAll('button'));
+    let view = 'wings';
+    function setView(v) {
+      if (v === view) return;
+      view = v;
+      const toGarden = v === 'garden';
+      sw.classList.remove('beckon');
+      btns.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.view === v)));
+      layer.setAttribute('aria-hidden', String(!toGarden));
+      if (toGarden) {
+        wing.explode();
+        card.classList.add('garden-on');
+        garden.enter();
+      } else {
+        card.classList.remove('garden-on');
+        wing.reform();
+      }
+      hint.textContent = toGarden ? 'tap a butterfly to fly to it · tap a flower to filter' : 'touch the wings for chaos · or open the garden to explore';
+    }
+    btns.forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
   }
 
   /* =========================================================
@@ -2851,13 +3046,15 @@ details.log[open] .log-list { animation: logIn .4s ease; }
   document.addEventListener('DOMContentLoaded', () => {
     initScramble();
     initRoles();
-    initGarden(initProjects());
+    const projectsApi = initProjects();
+    new Garden({ wrap: document.getElementById('garden'), svg: document.getElementById('gardenSvg'), tip: document.getElementById('gardenTip'), projectsApi, randomBtn: document.getElementById('gardenRandom') });
+    const heroGarden = new Garden({ wrap: document.getElementById('wingCard'), svg: document.getElementById('heroGardenSvg'), tip: document.getElementById('heroGardenTip'), layout: 'ring', projectsApi });
     initSkills();
     initNetwork();
     initTiles();
     initNav();
     initReveal();
-    new WingCanvas(document.getElementById('wingCanvas'));
+    initHeroSwitch(new WingCanvas(document.getElementById('wingCanvas')), heroGarden);
     new GoldDust(15);
     if (finePointer && !reduceMotion) {
       new ButterflyCursor();
