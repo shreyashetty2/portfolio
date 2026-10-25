@@ -541,6 +541,52 @@ details.log[open] .log-list { animation: logIn .4s ease; }
 .plink.gd { border-color: rgba(255,224,102,.25); color: var(--gold); }
 .plink.gd:hover { border-color: var(--gold); box-shadow: var(--glow-g); }
 
+/* ---------- project garden ---------- */
+.garden { border-radius: 20px; }
+.garden svg { display: block; width: 100%; height: auto; }
+.garden .soil { opacity: .22; }
+.garden .stem { fill: none; stroke: rgba(0,240,212,.55); stroke-width: 2.4; stroke-linecap: round; }
+.garden .leaf { fill: rgba(0,240,212,.22); stroke: rgba(0,240,212,.5); stroke-width: 1; }
+.garden .flower { cursor: pointer; outline: none; }
+.garden .petals { transform-box: fill-box; transform-origin: center; animation: petalSpin 22s linear infinite; transition: scale .35s ease; }
+.garden .flower:hover .petals, .garden .flower:focus-visible .petals { scale: 1.14; }
+@keyframes petalSpin { to { rotate: 360deg; } }
+.garden .bud { fill: #130d22; stroke: var(--gold); stroke-width: 1.6; }
+.garden .bud-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; fill: var(--gold); }
+.garden .glabel { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: .16em; fill: #d8c4ea; text-transform: uppercase; }
+.garden svg[data-mode="compact"] .glabel { font-size: 17px; }
+.garden svg[data-mode="compact"] .bud-n { font-size: 16px; }
+.garden .flower:hover .glabel, .garden .flower:focus-visible .glabel { fill: #fff; }
+.garden .thread { fill: none; stroke-width: 1; stroke-dasharray: 3 5; opacity: .35; animation: dash 1.6s linear infinite; }
+.garden .gfly { cursor: pointer; outline: none; }
+.garden .gfly-scale { transform-box: fill-box; transform-origin: center; transition: scale .3s cubic-bezier(.3,1.6,.5,1); }
+.garden .gfly:hover .gfly-scale, .garden .gfly:focus-visible .gfly-scale, .garden .gfly.picked .gfly-scale { scale: 1.45; }
+.garden .gfly-wings { transform-box: fill-box; transform-origin: center; animation: gflap .26s ease-in-out infinite alternate; }
+@keyframes gflap { to { transform: scaleX(.5); } }
+.garden .gfly .gid { font-family: 'Space Mono', monospace; font-size: 9px; fill: #bda6d1; opacity: .75; }
+.garden svg[data-mode="compact"] .gfly .gid { font-size: 13px; }
+.garden .gfly.picked .gfly-wings { animation-duration: .1s; }
+.garden-tip {
+  position: absolute; z-index: 10; pointer-events: none; width: 250px; padding: .75rem .9rem; border-radius: 12px;
+  background: rgba(19,13,34,.96); border: 1px solid var(--pink); box-shadow: var(--glow-p);
+  opacity: 0; transform: translate(-50%, calc(-100% - 6px)) scale(.96); transition: opacity .2s ease, transform .2s ease;
+}
+.garden-tip.on { opacity: 1; transform: translate(-50%, calc(-100% - 14px)) scale(1); }
+.garden-tip.below { transform: translate(-50%, 18px) scale(.96); }
+.garden-tip.below.on { transform: translate(-50%, 26px) scale(1); }
+.garden-tip .gt-id { font-family: 'Space Mono', monospace; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; }
+.garden-tip .gt-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .92rem; line-height: 1.3; margin-top: .25rem; color: #fff; }
+.garden-tip .gt-metric { font-family: 'Space Mono', monospace; font-size: .62rem; color: #a993bd; margin-top: .4rem; line-height: 1.5; }
+.garden-tip .gt-metric b { font-family: 'Syne', sans-serif; font-size: 1.05rem; color: var(--gold); text-shadow: var(--glow-g); margin-right: .35rem; }
+.garden-tip .gt-cta { font-family: 'Space Mono', monospace; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--pink-soft); margin-top: .5rem; }
+.pcard.spotlight { animation: spotlight 2.6s ease; border-color: var(--gold); }
+@keyframes spotlight {
+  0% { box-shadow: 0 0 0 0 rgba(255,224,102,0); }
+  18% { box-shadow: 0 0 0 3px rgba(255,224,102,.9), 0 0 60px rgba(255,45,155,.65); }
+  60% { box-shadow: 0 0 0 2px rgba(255,224,102,.6), 0 0 40px rgba(255,224,102,.45); }
+  100% { box-shadow: 0 0 0 0 rgba(255,224,102,0); }
+}
+
 /* ---------- skills matrix ---------- */
 .matrix {
   display: grid; gap: 1px; border-radius: 16px; overflow: hidden;
@@ -1072,6 +1118,15 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         <button type="button" role="radio" aria-checked="true" data-mode="impact">📊 Business Impact Mode</button>
         <button type="button" role="radio" aria-checked="false" data-mode="tech">💻 Technical Code Mode</button>
       </div>
+    </div>
+
+    <div class="garden tcard relative mb-8 reveal" id="garden">
+      <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4">
+        <div class="mono text-[.68rem] text-[#bda6d1]"><span class="text-pink">//</span> project.garden — hover a butterfly, tap it to fly to that project · tap a flower to filter</div>
+        <button type="button" class="plink gd" id="gardenRandom"><i class="fa-solid fa-wand-magic-sparkles"></i> Surprise me</button>
+      </div>
+      <svg id="gardenSvg" role="group" aria-label="Project garden: each butterfly is a project, gathered around its category flower"></svg>
+      <div class="garden-tip" id="gardenTip" role="tooltip"></div>
     </div>
 
     <div class="reveal flex flex-wrap gap-2 mb-6" id="projFilters" role="group" aria-label="Filter projects">
@@ -2263,11 +2318,12 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       setMode(next);
       modeBtns.find((b) => b.dataset.mode === next).focus();
     });
-    filterBtns.forEach((b) => b.addEventListener('click', () => {
-      filter = b.dataset.f;
-      filterBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    function setFilter(f) {
+      filter = f;
+      filterBtns.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.f === f)));
       applyVisibility();
-    }));
+    }
+    filterBtns.forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.f)));
     moreBtn.addEventListener('click', () => {
       expanded = !expanded;
       applyVisibility();
@@ -2278,6 +2334,200 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     setMode('impact');
     window.addEventListener('resize', placeKnob);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeKnob);
+
+    return {
+      focus(id) {
+        const i = PROJECTS.findIndex((p) => p.id === id);
+        if (i < 0) return;
+        if (filter !== 'all' && PROJECTS[i].cat !== filter) setFilter('all');
+        if (filter === 'all' && i >= INITIAL_VISIBLE && !expanded) { expanded = true; applyVisibility(); }
+        const card = cards[i];
+        card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        card.classList.remove('spotlight');
+        void card.offsetWidth;
+        card.classList.add('spotlight');
+        setTimeout(() => card.classList.remove('spotlight'), 2700);
+      },
+      filter(cat) {
+        setFilter(cat);
+        filterBtns[0].closest('.reveal').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      }
+    };
+  }
+
+  /* =========================================================
+     03b. PROJECT GARDEN — every project is a butterfly
+     ========================================================= */
+  const GARDEN_CATS = [
+    { key: 'ai', label: 'AI & Agents', color: '#ff2d9b', glow: 'rgba(255,45,155,.9)' },
+    { key: 'ml', label: 'ML & Statistics', color: '#00f0d4', glow: 'rgba(0,240,212,.85)' },
+    { key: 'analytics', label: 'Analytics', color: '#ffe066', glow: 'rgba(255,224,102,.9)' },
+    { key: 'build', label: 'Build & Design', color: '#c77dff', glow: 'rgba(199,125,255,.9)' }
+  ];
+
+  function initGarden(api) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const wrap = document.getElementById('garden');
+    const svg = document.getElementById('gardenSvg');
+    const tip = document.getElementById('gardenTip');
+    let mode = null;
+    let flies = [];
+    let visible = true;
+    let running = false;
+
+    const el = (tag, attrs = {}, parent) => {
+      const n = document.createElementNS(NS, tag);
+      Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+      if (parent) parent.appendChild(n);
+      return n;
+    };
+
+    function render() {
+      const next = wrap.clientWidth < 640 ? 'compact' : 'wide';
+      if (next === mode) return;
+      mode = next;
+      const wide = mode === 'wide';
+      const W = wide ? 1000 : 600;
+      const H = wide ? 400 : 725;
+      const spots = wide
+        ? [[130, 255], [377, 255], [623, 255], [870, 255]]
+        : [[150, 245], [450, 245], [150, 580], [450, 580]];
+      const flySize = wide ? 38 : 50;
+      const radius = wide ? 118 : 122;
+      svg.innerHTML = '';
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.dataset.mode = mode;
+
+      const defs = el('defs', {}, svg);
+      GARDEN_CATS.forEach((c) => {
+        const g = el('radialGradient', { id: `petal-${c.key}`, cx: '50%', cy: '70%', r: '75%' }, defs);
+        el('stop', { offset: '0%', 'stop-color': '#fff6c2', 'stop-opacity': '.95' }, g);
+        el('stop', { offset: '45%', 'stop-color': c.color, 'stop-opacity': '.9' }, g);
+        el('stop', { offset: '100%', 'stop-color': c.color, 'stop-opacity': '.15' }, g);
+      });
+
+      const threadLayer = el('g', {}, svg);
+      const flowerLayer = el('g', {}, svg);
+      const flyLayer = el('g', {}, svg);
+      flies = [];
+
+      GARDEN_CATS.forEach((c, ci) => {
+        const [fx, fy] = spots[ci];
+        const members = PROJECTS.filter((p) => p.cat === c.key);
+
+        // flower: soil glow, curved stem, leaves, spinning petals, counter bud
+        const fg = el('g', { class: 'flower', tabindex: '0', role: 'button', 'aria-label': `Show ${c.label} projects (${members.length})` }, flowerLayer);
+        el('ellipse', { class: 'soil', cx: fx, cy: fy + 84, rx: 72, ry: 9, fill: c.color }, fg);
+        el('path', { class: 'stem', d: `M${fx} ${fy + 84} C${fx - 14} ${fy + 60} ${fx + 12} ${fy + 34} ${fx} ${fy + 12}` }, fg);
+        el('ellipse', { class: 'leaf', cx: fx - 13, cy: fy + 58, rx: 12, ry: 5, transform: `rotate(-28 ${fx - 13} ${fy + 58})` }, fg);
+        el('ellipse', { class: 'leaf', cx: fx + 12, cy: fy + 42, rx: 11, ry: 4.5, transform: `rotate(24 ${fx + 12} ${fy + 42})` }, fg);
+        const bloom = el('g', { transform: `translate(${fx} ${fy})` }, fg);
+        el('circle', { r: 46, fill: c.color, opacity: '.08' }, bloom);
+        const petals = el('g', { class: 'petals' }, bloom);
+        for (let k = 0; k < 8; k++) {
+          el('ellipse', { rx: 10, ry: 23, cy: -17, fill: `url(#petal-${c.key})`, transform: `rotate(${k * 45})`, style: `filter: drop-shadow(0 0 6px ${c.glow})` }, petals);
+        }
+        el('circle', { class: 'bud', r: 13 }, bloom);
+        const n = el('text', { class: 'bud-n', 'text-anchor': 'middle', dy: '4.5' }, bloom);
+        n.textContent = String(members.length);
+        const label = el('text', { class: 'glabel', x: fx, y: fy + (wide ? 112 : 120), 'text-anchor': 'middle' }, fg);
+        label.textContent = c.label;
+        const pick = () => api.filter(c.key);
+        fg.addEventListener('click', pick);
+        fg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+
+        // butterflies fanned in an arc above their flower
+        members.forEach((p, i) => {
+          const a = (-165 + (150 * (i + 0.5)) / members.length) * (Math.PI / 180);
+          const ax = fx + Math.cos(a) * radius;
+          const ay = fy - 8 + Math.sin(a) * radius * 0.92;
+          const thread = el('path', { class: 'thread', stroke: c.color }, threadLayer);
+          const g = el('g', { class: 'gfly', tabindex: '0', role: 'button', 'aria-label': `P/${p.id} ${p.title} — go to project` }, flyLayer);
+          const body = el('g', {}, g);
+          const scale = el('g', { class: 'gfly-scale' }, body);
+          el('circle', { r: flySize * 0.7, fill: 'transparent' }, scale);
+          const wings = el('g', { class: 'gfly-wings', style: `color:${c.color}; filter: drop-shadow(0 0 7px ${c.glow}); animation-delay: -${(Math.random() * 0.3).toFixed(2)}s` }, scale);
+          el('use', { href: '#bfly', x: -flySize / 2, y: -flySize / 2, width: flySize, height: flySize }, wings);
+          const id = el('text', { class: 'gid', 'text-anchor': 'middle', y: flySize * 0.78 }, scale);
+          id.textContent = p.id;
+          const fly = { p, c, g, body, thread, fx, fy, ax, ay, ph: Math.random() * Math.PI * 2, sp: 0.012 + Math.random() * 0.01, rx: 7 + Math.random() * 6, ry: 5 + Math.random() * 5, hover: false, x: ax, y: ay };
+          flies.push(fly);
+
+          const show = () => { fly.hover = true; showTip(fly); };
+          const hide = () => { fly.hover = false; tip.classList.remove('on'); };
+          const go = () => launch(fly);
+          g.addEventListener('pointerenter', show);
+          g.addEventListener('pointerleave', hide);
+          g.addEventListener('focus', show);
+          g.addEventListener('blur', hide);
+          g.addEventListener('click', go);
+          g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+        });
+      });
+      place();
+    }
+
+    function place() {
+      for (const f of flies) {
+        if (!f.hover && !reduceMotion) f.ph += f.sp;
+        f.x = f.ax + Math.cos(f.ph) * f.rx;
+        f.y = f.ay + Math.sin(f.ph * 1.3) * f.ry;
+        const tilt = Math.cos(f.ph) * 9;
+        f.body.setAttribute('transform', `translate(${f.x.toFixed(1)} ${f.y.toFixed(1)}) rotate(${tilt.toFixed(1)})`);
+        const mx = (f.fx + f.x) / 2 + (f.x < f.fx ? -18 : 18);
+        const my = (f.fy + f.y) / 2;
+        f.thread.setAttribute('d', `M${f.fx} ${f.fy - 12} Q${mx.toFixed(1)} ${my.toFixed(1)} ${f.x.toFixed(1)} ${f.y.toFixed(1)}`);
+      }
+    }
+
+    function showTip(f) {
+      const wr = wrap.getBoundingClientRect();
+      const br = f.g.getBoundingClientRect();
+      const x = Math.min(Math.max(br.left + br.width / 2 - wr.left, 135), wr.width - 135);
+      const top = br.top - wr.top;
+      const below = top < 150;
+      tip.classList.toggle('below', below);
+      tip.style.left = `${x}px`;
+      tip.style.top = `${below ? br.bottom - wr.top : top}px`;
+      tip.style.borderColor = f.c.color;
+      tip.innerHTML = `
+        <div class="gt-id" style="color:${f.c.color}">P/${esc(f.p.id)} · ${esc(f.c.label)} · ${esc(f.p.date)}</div>
+        <div class="gt-title">${esc(f.p.title)}</div>
+        <div class="gt-metric"><b>${esc(f.p.metric)}</b>${esc(f.p.metricLbl)}</div>
+        <div class="gt-cta">tap to fly there →</div>`;
+      tip.classList.add('on');
+    }
+
+    function launch(f) {
+      f.g.classList.add('picked');
+      tip.classList.remove('on');
+      setTimeout(() => {
+        f.g.classList.remove('picked');
+        api.focus(f.p.id);
+      }, reduceMotion ? 0 : 380);
+    }
+
+    document.getElementById('gardenRandom').addEventListener('click', () => {
+      const f = flies[Math.floor(Math.random() * flies.length)];
+      showTip(f);
+      f.g.classList.add('picked');
+      setTimeout(() => { tip.classList.remove('on'); launch(f); }, reduceMotion ? 0 : 900);
+    });
+
+    function loop() {
+      if (running || reduceMotion) return;
+      running = true;
+      const tick = () => {
+        if (!visible) { running = false; return; }
+        place();
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    render();
+    new ResizeObserver(() => render()).observe(wrap);
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) loop(); }).observe(wrap);
   }
 
   /* =========================================================
@@ -2451,7 +2701,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       desc: 'Mentored first-generation female Grade 10 and 11 students in academics and job readiness for 45+ hours, fostering role-model relationships.' },
     { kind: 'vol', metric: '30+ hrs', title: 'Math Instructor — Abhyudaya-SPJIMR', org: 'Mumbai, India', date: 'Jan 2023 – May 2023', role: 'math_instructor',
       desc: 'Provided Math instruction to Grade 11 students (Maharashtra SSC syllabus) and assisted with back-office tasks for 30+ hours.' },
-    { kind: 'vol', metric: '~₹10K', title: 'Social Media Volunteer — Prangan Foundation', org: 'Mumbai, India', date: 'Jul 2021 – Sep 2021', role: 'social_media_volunteer',
+    { kind: 'vol', metric: '₹10K', title: 'Social Media Volunteer — Prangan Foundation', org: 'Mumbai, India', date: 'Jul 2021 – Sep 2021', role: 'social_media_volunteer',
       desc: 'Contributed 65+ hours managing social media to increase reach of a mobile donation campaign — raised ~Rs. 10,000 as a team.' }
   ];
   const KIND_META = {
@@ -2601,7 +2851,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
   document.addEventListener('DOMContentLoaded', () => {
     initScramble();
     initRoles();
-    initProjects();
+    initGarden(initProjects());
     initSkills();
     initNetwork();
     initTiles();
