@@ -5,3 +5,6 @@ resume/
 # local / OS files
 .DS_Store
 .claude/
+
+# private notes & career dump
+private/
