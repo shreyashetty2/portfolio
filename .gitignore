@@ -1,0 +1,7 @@
+# private documents — never publish
+cv/
+resume/
+
+# local / OS files
+.DS_Store
+.claude/
