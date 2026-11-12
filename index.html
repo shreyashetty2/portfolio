@@ -1175,7 +1175,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
     <div class="grid md:grid-cols-2 gap-4" id="projGrid"></div>
 
     <div class="flex justify-center mt-8">
-      <button type="button" class="btn-ghost" id="projMore"><i class="fa-solid fa-chevron-down"></i> <span>View 3 more projects</span></button>
+      <button type="button" class="btn-ghost" id="projMore"><i class="fa-solid fa-chevron-down"></i> <span>View 11 more projects</span></button>
     </div>
   </div>
 </section>
@@ -2073,6 +2073,54 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ]
     },
     {
+      cat: 'ai', icon: 'fa-bullseye', wide: true,
+      title: 'Agentic AI Marketing Decision Lab', sub: 'Data Science Capstone with TD Bank · ENGI E4800',
+      org: 'Columbia University × TD Bank · team of 5', date: 'Sep 2026 – Present',
+      role: 'Led Model 3 (true incremental uplift) end to end; built Feature Agent 2B; Cloud Run deployment groundwork',
+      metric: '26% → 9%', metricLbl: 'incremental lift, low- vs. heavy-spend households: campaigns over-target people who would buy anyway',
+      impact: [
+        'End-to-end decision-support prototype: AI agents run the modeling lifecycle (data → features → models → evaluation), and a Decision Lab lets marketers test what-if targeting scenarios explained by an LLM agent.',
+        'Uplift finding: campaigns favor the heaviest, most loyal spenders, but low and moderate spenders respond most to being mailed. 88% of treated buyers bought the product without ever redeeming the coupon.',
+        'Framed honestly: uplift that adjusts for observed confounders (targeting is non-random), not a randomized causal estimate, and reported with an E-value sensitivity check.'
+      ],
+      tech: [
+        'dunnhumby Complete Journey: 2.6M transactions · 2,500 households · 30 campaigns',
+        'Compared 5 causal learners head to head (T-learner, propensity-weighted T, X-learner, doubly-robust/AIPW, entropy balancing) → adopted the X-learner, which corrects for a 12:1 treated-to-control imbalance',
+        'Propensity-weighted, within-campaign Qini evaluation with locked hold-out campaigns',
+        'Confounder filter drops purchases driven by in-store displays and mailers (36.8M promo rows)',
+        'Feature Agent 2B: leakage-checked per-model training tables generated from one YAML spec',
+        'Evaluation Agent escalates to human review when no rule covers a result instead of guessing'
+      ],
+      stack: ['Python', 'scikit-learn', 'Uplift Modeling', 'Causal Inference', 'Multi-Agent', 'Docker', 'Cloud Run'],
+      links: [
+        { t: 'GitHub', u: 'https://github.com/shreyashetty2/Agentic-AI-Marketing-Decision-Lab', k: 'gh' }
+      ]
+    },
+    {
+      cat: 'ai', icon: 'fa-ghost', wide: true,
+      title: 'Ghost Trials Autopsy — Deep Research Agent', sub: 'IEOR 4570 · Deep Research path',
+      org: 'Columbia University · team of 3', date: 'Fall 2026',
+      role: 'Owned the SEC EDGAR disclosures lane, the Citation Checker, and the discrepancy finder',
+      metric: '43', metricLbl: 'stopped trials where the SEC 8-K tells a different story than the public registry',
+      impact: [
+        'Explains why industry clinical trials stopped early, and whether the reason given to the public registry matches what the sponsor told investors. It returns a cited report in about 2 minutes instead of a manual search of three government databases.',
+        '759 of 2,905 stopped trials that enrolled patients went silent: no posted results and no paper, covering 62,849 participants.',
+        'The same Gemini model without tools got the central fact wrong on every sample case; the agent got it right, for example "business reasons" in the registry vs. "did not meet its primary objective" in the 8-K.'
+      ],
+      tech: [
+        'Lead → 3 parallel Researchers → Writer → Citation Checker → Skeptic, on FastAPI + Cloud Run with continuous deployment',
+        'Matched 591 sponsors to SEC CIKs (normalized + fuzzy matching) and collected 2,053 8-K filings within 120 days of a stop',
+        'Citation Checker: deterministic rules + model check caught 10/10 planted errors with 0/10 correct claims changed',
+        'Built the discrepancies table: 43 registry-vs-8-K conflicts, 5 verified by hand',
+        'DuckDB snapshot of 16,473 phase 2–3 trials × 25,615 publication links, plus a Text2SQL ledger agent'
+      ],
+      stack: ['Python', 'FastAPI', 'Gemini / Vertex AI', 'DuckDB', 'SEC EDGAR', 'Multi-Agent', 'Cloud Run'],
+      links: [
+        { t: 'Live App', u: 'https://ghost-trials-autopsy-895402809785.us-central1.run.app/', k: 'demo' },
+        { t: 'GitHub', u: 'https://github.com/rishika1099/Ghost-Trials-Autopsy', k: 'gh' }
+      ]
+    },
+    {
       cat: 'ai', icon: 'fa-gavel', wide: true,
       title: 'Precedent & Practice — Human Rights Advocacy Tracker', sub: 'TrialWatch Fair Trial & AI Hackathon · Track 3: Advocacy & Impact',
       org: 'Columbia Law School Human Rights Institute · team of 5', date: 'Oct 2026',
@@ -2138,7 +2186,7 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       stack: ['Python', 'FastAPI', 'LiteLLM', 'Vertex AI (Gemini)', 'Vanilla JS', 'Cloud Run', 'pytest'],
       links: [
         { t: 'Live App', u: 'https://layer-lab-635182820659.us-east1.run.app/', k: 'demo' },
-        { t: 'GitHub', u: 'https://github.com/rishika1099/Tool-Calling-Agent', k: 'gh' }
+        { t: 'GitHub', u: 'https://github.com/rishika1099/Layer-Lab', k: 'gh' }
       ]
     },
     {
@@ -2160,6 +2208,63 @@ details.log[open] .log-list { animation: logIn .4s ease; }
         { t: 'Live Demo', u: 'https://huggingface.co/spaces/Shruti02222/ai-investment-analyst', k: 'demo' },
         { t: 'Report', u: 'https://github.com/Shruti022/Finance_chatbot/blob/main/Project_Report_AML_Lumiq_App.pdf', k: 'doc' }
       ]
+    },
+    {
+      cat: 'ai', icon: 'fa-seedling', private: true,
+      title: 'Generative Social Choice for Fair Conservation Contracts', sub: 'IEOR 4575 · AI & Algorithmic Decision-Making for Social Good',
+      org: 'Columbia University · solo project', date: 'Spring 2026',
+      metric: '100', metricLbl: 'data-grounded LLM farmer personas voting on AI-drafted contracts',
+      impact: [
+        'Designs Payment for Ecosystem Services contracts for Indonesian smallholder oil-palm farmers that the worst-off farmers can still accept, not just the average one.',
+        'Grounds every persona in real behavioral-economics parameters (Shi et al. 2024) and IFLS-5 household data, with explicit checks that the personas are genuinely diverse.'
+      ],
+      tech: [
+        'Silicon sample: 100 LLM personas from IFLS-5 finances × behavioral parameters (risk and loss aversion)',
+        'Best-of-N generation of 20 candidate contracts as JSON, with a deterministic budget check',
+        'Persona × contract voting matrix → Relaxed Egalitarian Welfare selection (15th-percentile score, Nash welfare tiebreak)',
+        'Validated the winning contract in an OR simulator against a rational-agent baseline',
+        'Persona diversity checks: K-means, pairwise distances, TF-IDF prompt similarity, ANOVA'
+      ],
+      stack: ['Python', 'OpenAI API', 'LLM Personas', 'Social Choice', 'Behavioral Economics', 'scikit-learn'],
+      links: []
+    },
+    {
+      cat: 'analytics', icon: 'fa-camera',
+      title: 'Algorithmic Brittleness in Face Detection', sub: 'DSPP · Regulating facial recognition in policy settings',
+      org: 'Columbia University · team of 3', date: 'Mar – Apr 2026',
+      metric: '93%', metricLbl: 'image-level detection, with confidence dropping from 88 (family groups) to 61 (car accidents)',
+      impact: [
+        'Showed where a CNN face detector is least reliable: chaotic, high-stakes scenes such as accidents, traffic and raids. This matters when deciding how to regulate its use in public settings.',
+        'Turned the findings into interactive policy simulations: a CNN scanner, a surveillance simulator and a policy dashboard.'
+      ],
+      tech: [
+        'WIDER FACE: 360 images sampled across 18 real-world scene categories',
+        'CNN detector (libfacedetection) → per-image face counts and confidence scores',
+        'Category-level EDA and correlation tests in R (ggplot2, dplyr)',
+        'Interactive HTML/JS simulations for the policy presentation'
+      ],
+      stack: ['R', 'ggplot2', 'Computer Vision', 'AI Policy', 'HTML/JS'],
+      links: [
+        { t: 'Live Demo', u: 'https://shreyashetty2.github.io/dspp-facial-detection-ppt/', k: 'demo' },
+        { t: 'GitHub', u: 'https://github.com/jainnami/wider-faces', k: 'gh' }
+      ]
+    },
+    {
+      cat: 'analytics', icon: 'fa-hashtag',
+      title: 'Does X Amplify AI-Generated Abuse Imagery?', sub: 'DSPP research pipeline · AI-generated NCII in the Grok era',
+      org: 'Columbia University', date: 'Apr 2026',
+      metric: '3-signal', metricLbl: 'AI-image detector: hashtag keywords, CLIP zero-shot, watermark metadata',
+      impact: [
+        'Tests an "algorithmic complicity" hypothesis: do AI-generated posts get more engagement than human posts from comparable accounts?',
+        'Maps whether the ecosystem runs through a few super-spreaders or many small accounts.'
+      ],
+      tech: [
+        'Post collection via the Apify X scraper; a 50-post real pilot augmented with distribution-calibrated synthetic data, flagged and analyzed separately from the real posts',
+        'Propensity score matching on account size, age and posting time, plus OLS and negative binomial regression',
+        'Bipartite account–hashtag network with Louvain community detection'
+      ],
+      stack: ['Python', 'CLIP', 'NetworkX', 'statsmodels', 'Propensity Matching', 'Web Scraping'],
+      links: [{ t: 'GitHub', u: 'https://github.com/shreyashetty2/dspp-grok-project', k: 'gh' }]
     },
     {
       cat: 'ml', icon: 'fa-bone',
@@ -2238,6 +2343,25 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       links: [{ t: 'Live Site', u: 'https://shreyashetty2.github.io/edav_project/', k: 'demo' }]
     },
     {
+      cat: 'build', icon: 'fa-scale-balanced',
+      title: 'SGI Compliance Checker — India IT Rules 2026', org: 'Columbia University · DSPP Policy Workshop', date: 'Apr 2026',
+      metric: '4 laws', metricLbl: 'IT Rules 2021 (+ 2025/26 amendments), BNS 2023 & DPDP Act 2023 applied to any content',
+      impact: [
+        "Checks whether a piece of content counts as Synthetically Generated Information under India's February 2026 amendment, who is liable, what must happen, and how quickly.",
+        'Built-in deepfake, satire, voice-clone and non-consensual imagery examples, each with a pro/con policy debate view.'
+      ],
+      tech: [
+        'Rule-based classification of content against the amended IT Rules',
+        'Liability, compliance-deadline and applicable-law panels',
+        'Single-page HTML / CSS / JS app on GitHub Pages'
+      ],
+      stack: ['JavaScript', 'HTML/CSS', 'AI Regulation', 'Policy Design'],
+      links: [
+        { t: 'Live Demo', u: 'https://shreyashetty2.github.io/dspp-workshop-ai-regulation/', k: 'demo' },
+        { t: 'GitHub', u: 'https://github.com/shreyashetty2/dspp-workshop-ai-regulation', k: 'gh' }
+      ]
+    },
+    {
       cat: 'build', icon: 'fa-calendar-days',
       title: 'EventAffair — Event Management App', org: 'Sardar Patel Institute of Technology', date: 'Aug – Dec 2022',
       metric: '1 app', metricLbl: 'for concerts, movies & corporate functions',
@@ -2268,6 +2392,38 @@ details.log[open] .log-list { animation: logIn .4s ease; }
       ],
       stack: ['Python', 'Flask', 'OpenCV', 'DeepFace', 'HTML/CSS/JS'],
       links: [{ t: 'GitHub', u: 'https://github.com/shreyashetty2/kyc-verification', k: 'gh' }]
+    },
+    {
+      cat: 'build', icon: 'fa-hotel',
+      title: 'Resort Property Management System', org: 'Sardar Patel Institute of Technology · with Shruti Shetty', date: 'Nov 2021',
+      metric: '2-sided', metricLbl: 'guest booking site + staff admin console',
+      impact: [
+        'Replaces paper-heavy resort operations with one system for reservations and daily admin tasks.',
+        'Gives the resort chain an online presence that makes booking easier for guests.'
+      ],
+      tech: [
+        'PHP + MySQL backend for bookings, guests and resort records',
+        'Separate admin module for staff operations',
+        'Responsive HTML / CSS / JS front end'
+      ],
+      stack: ['PHP', 'MySQL', 'JavaScript', 'HTML/CSS'],
+      links: [{ t: 'GitHub', u: 'https://github.com/shreyashetty2/Resort-Property-Management', k: 'gh' }]
+    },
+    {
+      cat: 'build', icon: 'fa-graduation-cap',
+      title: 'CLG360 — College Discovery Portal', org: 'Hackathon · team Cyber Crackers (4)', date: 'Jan 2022',
+      metric: 'Live chat', metricLbl: 'real-time help chat built on WebSockets',
+      impact: [
+        'Helps students compare colleges in one place: college info, rankings, search and program pages.',
+        'A built-in real-time chat box answers questions while students browse.'
+      ],
+      tech: [
+        'Django web app with login, search, ranking and college-info views',
+        'Django Channels consumers for real-time chat',
+        'SQLite data layer with templated HTML / CSS / JS pages'
+      ],
+      stack: ['Python', 'Django', 'Django Channels', 'SQLite', 'JavaScript'],
+      links: [{ t: 'GitHub', u: 'https://github.com/shreyashetty2/cyber_crackers', k: 'gh' }]
     },
     {
       cat: 'build', icon: 'fa-hand-pointer', wide: true,
@@ -2591,9 +2747,16 @@ details.log[open] .log-list { animation: logIn .4s ease; }
 
         // butterflies fanned outward from the flower
         g.items.forEach((item, i) => {
-          const a = (dir - sp.spread / 2 + (sp.spread * (i + 0.5)) / g.items.length) * (Math.PI / 180);
-          const ax = fx + Math.cos(a) * sp.radius;
-          const ay = fy + Math.sin(a) * sp.radius * (ring ? 1 : 0.92) - (ring ? 0 : 8);
+          // busy blooms (6+) fan out over two staggered arcs so wings never collide
+          const twoRows = !ring && g.items.length > 5;
+          const row = twoRows ? i % 2 : 0;
+          const rowCount = twoRows ? Math.ceil((g.items.length - row) / 2) : g.items.length;
+          const k = twoRows ? Math.floor(i / 2) : i;
+          const rowSpread = twoRows ? sp.spread * (row ? 0.78 : 1.02) : sp.spread;
+          const rad = sp.radius * (row ? 1.4 : 1);
+          const a = (dir - rowSpread / 2 + (rowSpread * (k + 0.5)) / rowCount) * (Math.PI / 180);
+          const ax = fx + Math.cos(a) * rad;
+          const ay = fy + Math.sin(a) * rad * (ring ? 1 : 0.92) - (ring ? 0 : 8);
           const thread = this.el('path', { class: 'thread', stroke: g.color }, threadLayer);
           const label2 = item.kind === 'career' ? `${item.title} at ${item.org} — go to experience` : `P/${item.id} ${item.title} — go to project`;
           const node = this.el('g', { class: 'gfly', tabindex: '0', role: 'button', 'aria-label': label2 }, flyLayer);
